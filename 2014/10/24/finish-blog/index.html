@@ -4,12 +4,18 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Hello World | 行走的力量</title>
+    <title>搭建Hexo blog总结 | 行走的力量</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Weber Wang">
     
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in ">
+    <meta name="description" content="搭建环境
+安装环境是OS X Yosemite
+安装hexo出错
+npm install hexo -g命令在Mac下需要管理员权限所以就是sudo npm install hexo -g
+使用pacman主题
+这个主题还是挺好看的，随不如light主题的简洁，但是那个转动的头像挺有意思的，哈哈。
+">
     
     
     
@@ -35,16 +41,18 @@
 			
 			<div id="textlogo">
 				<h1 class="site-name"><a href="/" title="行走的力量">行走的力量</a></h1>
-				<h2 class="blog-motto"></h2>
+				<h2 class="blog-motto">一直走，路总会笑</h2>
 			</div>
 			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
 					
-						<li><a href="/">Home</a></li>
+						<li><a href="/">主页</a></li>
 					
-						<li><a href="/archives">Archives</a></li>
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">文章分类</a></li>
 					
 					<li>
 					
@@ -66,15 +74,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/10/24/hello-world/" title="Hello World" itemprop="url">Hello World</a>
+      <a href="/2014/10/24/finish-blog/" title="搭建Hexo blog总结" itemprop="url">搭建Hexo blog总结</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="Weber Wang">Weber Wang</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-10-24T15:08:49.000Z" itemprop="datePublished">10月 24 2014</time>
-    Updated:<time datetime="2014-10-24T15:08:49.000Z" itemprop="dateModified">10月 24 2014</time>
+    <time datetime="2014-10-24T15:22:55.000Z" itemprop="datePublished">10月 24 2014</time>
+    Updated:<time datetime="2014-10-24T15:57:42.000Z" itemprop="dateModified">10月 24 2014</time>
     
   </p>
 </header>
@@ -83,37 +91,41 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick_Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create_a_new_post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run_server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate_static_files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy_to_remote_sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#搭建环境"><span class="toc-number">1.</span> <span class="toc-text">搭建环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装hexo出错"><span class="toc-number">2.</span> <span class="toc-text">安装hexo出错</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用pacman主题"><span class="toc-number">3.</span> <span class="toc-text">使用pacman主题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用categories功能"><span class="toc-number">3.1.</span> <span class="toc-text">使用categories功能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加新浪微博widget(微博秀)"><span class="toc-number">4.</span> <span class="toc-text">添加新浪微博widget(微博秀)</span></a></li></ol>
 		</div>
 		
-		<p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">trobuleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2>
-<h3 id="Create_a_new_post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+		<h2 id="搭建环境">搭建环境</h2>
+<p>安装环境是<strong><em>OS X Yosemite</em></strong></p>
+<h2 id="安装hexo出错">安装hexo出错</h2>
+<p><code>npm install hexo -g</code>命令在Mac下需要管理员权限所以就是<code>sudo npm install hexo -g</code></p>
+<h2 id="使用pacman主题">使用pacman主题</h2>
+<p>这个主题还是挺好看的，随不如<a href="https://github.com/hexojs/hexo-theme-light" target="_blank" rel="external">light</a>主题的简洁，但是那个转动的头像挺有意思的，哈哈。</p>
+<h3 id="使用categories功能">使用categories功能</h3>
+<p>因为是第一次搭建个人博客，所以用了主题之后不知道这个文章是怎么到分类里面去得，按照配置文件的说明是新建<code>categories</code>文件夹到<code>../source</code>.但是在<code>pacman</code>这个文件夹下折腾了半天，崩溃，原来是在博客的根目录下得<code>source</code>文件下新建，然后新建<code>index.md</code>文件就可以了。</p>
+<h2 id="添加新浪微博widget(微博秀)">添加新浪微博widget(微博秀)</h2>
+<ol>
+<li>去<a href="http://app.weibo.com/tool/weiboshow" target="_blank" rel="external">新浪微博开放平台</a>设置和生成微博秀代码。</li>
+<li>在<code>themes/pacman/layout/_widget</code>中新建名为<code>weibo.ejs</code>的文件，将刚才的代码直接保存到这里。</li>
+<li>在<code>themes/pacman/_config.yml</code>中，添加如下：</li>
+</ol>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">widgets:</div><div class="line"><span class="bullet">- </span>weibo</div></pre></td></tr></table></figure>
 
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+<p>刷新就可以看到了.</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
 
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/hexo/">hexo</a>
+</div>
+
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2014/10/24/hello-world/" data-title="Hello World | 行走的力量" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2014/10/24/finish-blog/" data-title="搭建Hexo blog总结 | 行走的力量" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -121,12 +133,16 @@
 	</article>
 	
 	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
 </div>  
       <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick_Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create_a_new_post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run_server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate_static_files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy_to_remote_sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#搭建环境"><span class="toc-number">1.</span> <span class="toc-text">搭建环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装hexo出错"><span class="toc-number">2.</span> <span class="toc-text">安装hexo出错</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用pacman主题"><span class="toc-number">3.</span> <span class="toc-text">使用pacman主题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用categories功能"><span class="toc-number">3.1.</span> <span class="toc-text">使用categories功能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加新浪微博widget(微博秀)"><span class="toc-number">4.</span> <span class="toc-text">添加新浪微博widget(微博秀)</span></a></li></ol>
   </div>
 
 <div id="asidepart">
@@ -134,12 +150,21 @@
 <aside class="clearfix">
 
   
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+		
+		</ul>
+</div>
 
-  
 
   <div class="rsspart">
 	<a href="null" target="_blank" title="rss">RSS</a>
 </div>
+
+  <iframe width="100%" height="400" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=400&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=0&uid=2426173084&verifier=5bb4676f&dpc=1"></iframe>
 
 </aside>
 </div>
@@ -154,8 +179,14 @@
 	
 	<div class="social-font clearfix">
 		
+		<a href="http://weibo.com/2426173084## e.g. 436062867 for http://weibo.com/436062867" target="_blank" title="weibo"></a>
 		
 		
+		
+		<a href="https://github.com/weberwang## e.g. A-limon for https://github.com/A-limon" target="_blank" title="github"></a>
+		
+		
+		<a href="https://www.facebook.com/Minko.Wang.9## e.g. yangjian for https://favebook.com/yangjian" target="_blank" title="facebook"></a>
 		
 		
 	</div>
@@ -275,6 +306,18 @@ $(document).ready(function(){
 });     
 </script>
 
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"null"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
 
 
 
