@@ -1,6 +1,6 @@
 
  <!DOCTYPE HTML>
-<html lang="zh_CN">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   
@@ -11,6 +11,8 @@
     
     
     
+    
+    <link rel="alternate" href="/atom.xml## RSS address." title="行走的力量" type="application/atom+xml">
     
     
     <link rel="icon" href="/img/favicon.ico">
@@ -35,7 +37,7 @@
 				<h1 class="site-name"><a href="/" title="行走的力量">行走的力量</a></h1>
 				<h2 class="blog-motto">一直走，路总会笑</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -46,12 +48,14 @@
 					
 						<li><a href="/categories">文章分类</a></li>
 					
+						<li><a href="/about">关于</a></li>
+					
 					<li>
 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+					<form class="search" action="//baidu.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:yoursite.com">
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:">
 					</form>
 					
 					</li>
@@ -62,6 +66,23 @@
     </header>
     <div id="container">
       <div id="main">
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2014/10/25/about-flash-UI/" title="自定义AS3UI组件--前言" itemprop="url">
+  
+    <h1 itemprop="name">自定义AS3UI组件--前言</h1>
+    
+     
+           <p itemprop="description" >背景
+公司用了好多年的公共库变的很臃肿，效率低，代码重复，最后这个重构重写的任务安排到了我，用blog记录下对AS组件的思考.
+基类需要解决的问题
+对组件基类的思考:基础组件——一个容器，AS3提供的最基本的容器是Sprite，还有一个虚基类DisplayObjectContai</p>
+        
+    
+    <time datetime="2014-10-24T16:55:37.000Z" itemprop="datePublished">10月 25 2014</time>
+  </a>
+</section>
 
   <section class="post" itemscope itemprop="blogPost">
   
@@ -84,16 +105,18 @@ npm install hexo -g命令在Mac下需要管理员权限所以就是sudo npm inst
 
 
 </div>
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
 
   
 <div class="categorieslist">
-	<p class="asidetitle">Categories</p>
+	<p class="asidetitle">分类</p>
 		<ul>
+		
+			<li><a href="/categories/ActionScript3-0/" title="ActionScript3.0">ActionScript3.0<sup>1</sup></a></li>
 		
 			<li><a href="/categories/hexo/" title="hexo">hexo<sup>1</sup></a></li>
 		
@@ -101,14 +124,21 @@ npm install hexo -g命令在Mac下需要管理员权限所以就是sudo npm inst
 </div>
 
 
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">2</span></li></ul>
+  </div>
+
+
   <div class="rsspart">
-	<a href="null" target="_blank" title="rss">RSS</a>
+	<a href="/atom.xml## RSS address." target="_blank" title="rss">RSS 订阅</a>
 </div>
 
   <iframe width="100%" height="350" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=350&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=0&isWeibo=1&isFans=0&uid=2426173084&verifier=5bb4676f&dpc=1"></iframe>
 
   <div class="linkslist">
-  <p class="asidetitle">Links</p>
+  <p class="asidetitle">友情链接</p>
     <ul>
       <li><a href="http://yangjian.me" target="_blank" title="YangJian">Alimon's Blog</a></li>
       <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
@@ -142,7 +172,7 @@ npm install hexo -g命令在Mac下需要管理员权限所以就是sudo npm inst
 	</div>
 		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2014 
 		
-		<a href="http://yoursite.com" target="_blank" title="Weber Wang">Weber Wang</a>
+		<a href="" target="_blank" title="Weber Wang">Weber Wang</a>
 		
 		</p>
 </div>

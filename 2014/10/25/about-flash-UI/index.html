@@ -4,17 +4,15 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>搭建Hexo blog总结 | 行走的力量</title>
+    <title>自定义AS3UI组件--前言 | 行走的力量</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Weber Wang">
     
-    <meta name="description" content="搭建环境
-安装环境是OS X Yosemite
-安装hexo出错
-npm install hexo -g命令在Mac下需要管理员权限所以就是sudo npm install hexo -g
-使用pacman主题
-这个主题还是挺好看的，虽然不如light主题的简洁，但是那个转动的头像挺有意思的，哈哈。">
+    <meta name="description" content="背景
+公司用了好多年的公共库变的很臃肿，效率低，代码重复，最后这个重构重写的任务安排到了我，用blog记录下对AS组件的思考.
+基类需要解决的问题
+对组件基类的思考:基础组件——一个容器，AS3提供的最基本的容器是Sprite，还有一个虚基类DisplayObjectContainer，但是这是一个">
     
     
     
@@ -77,15 +75,15 @@ npm install hexo -g命令在Mac下需要管理员权限所以就是sudo npm inst
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/10/24/finish-blog/" title="搭建Hexo blog总结" itemprop="url">搭建Hexo blog总结</a>
+      <a href="/2014/10/25/about-flash-UI/" title="自定义AS3UI组件--前言" itemprop="url">自定义AS3UI组件--前言</a>
   </h1>
   <p class="article-author">By
     
       <a href="" title="Weber Wang">Weber Wang</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-10-24T15:22:55.000Z" itemprop="datePublished">10月 24 2014</time>
-    更新日期:<time datetime="2014-10-25T06:47:39.000Z" itemprop="dateModified">10月 25 2014</time>
+    <time datetime="2014-10-24T16:55:37.000Z" itemprop="datePublished">10月 25 2014</time>
+    更新日期:<time datetime="2014-10-25T09:09:48.000Z" itemprop="dateModified">10月 25 2014</time>
     
   </p>
 </header>
@@ -94,26 +92,44 @@ npm install hexo -g命令在Mac下需要管理员权限所以就是sudo npm inst
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#搭建环境"><span class="toc-number">1.</span> <span class="toc-text">搭建环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装hexo出错"><span class="toc-number">2.</span> <span class="toc-text">安装hexo出错</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用pacman主题"><span class="toc-number">3.</span> <span class="toc-text">使用pacman主题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用categories功能"><span class="toc-number">3.1.</span> <span class="toc-text">使用categories功能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加新浪微博widget(微博秀)"><span class="toc-number">4.</span> <span class="toc-text">添加新浪微博widget(微博秀)</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基类需要解决的问题"><span class="toc-number">2.</span> <span class="toc-text">基类需要解决的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何提高渲染效率"><span class="toc-number">2.1.</span> <span class="toc-text">如何提高渲染效率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置组件的尺寸"><span class="toc-number">2.2.</span> <span class="toc-text">设置组件的尺寸</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#组件内部事件管理"><span class="toc-number">2.3.</span> <span class="toc-text">组件内部事件管理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用属性"><span class="toc-number">3.</span> <span class="toc-text">常用属性</span></a></li></ol>
 		</div>
 		
-		<h2 id="搭建环境">搭建环境</h2>
-<p>安装环境是<strong><em>OS X Yosemite</em></strong></p>
-<h2 id="安装hexo出错">安装hexo出错</h2>
-<p><code>npm install hexo -g</code>命令在Mac下需要管理员权限所以就是<code>sudo npm install hexo -g</code></p>
-<h2 id="使用pacman主题">使用pacman主题</h2>
-<p>这个主题还是挺好看的，虽然不如<a href="https://github.com/hexojs/hexo-theme-light" target="_blank" rel="external">light</a>主题的简洁，但是那个转动的头像挺有意思的，哈哈。</p>
-<h3 id="使用categories功能">使用categories功能</h3>
-<p>因为是第一次搭建个人博客，所以用了主题之后不知道这个文章是怎么到分类里面去得，按照配置文件的说明是新建<code>categories</code>文件夹到<code>../source</code>.但是在<code>pacman</code>这个文件夹下折腾了半天，崩溃，原来是在博客的根目录下得<code>source</code>文件下新建，然后新建<code>index.md</code>文件就可以了。</p>
-<h2 id="添加新浪微博widget(微博秀)">添加新浪微博widget(微博秀)</h2>
-<ol>
-<li>去<a href="http://app.weibo.com/tool/weiboshow" target="_blank" rel="external">新浪微博开放平台</a>设置和生成微博秀代码。</li>
-<li>在<code>themes/pacman/layout/_widget</code>中新建名为<code>weibo.ejs</code>的文件，将刚才的代码直接保存到这里。</li>
-<li>在<code>themes/pacman/_config.yml</code>中，添加如下：</li>
-</ol>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">widgets:</div><div class="line"><span class="bullet">- </span>weibo</div></pre></td></tr></table></figure>
+		<h2 id="背景">背景</h2>
+<p>公司用了好多年的公共库变的很臃肿，效率低，代码重复，最后这个重构重写的任务安排到了我，用blog记录下对AS组件的思考.</p>
+<h2 id="基类需要解决的问题">基类需要解决的问题</h2>
+<p>对组件基类的思考:<br>基础组件——一个容器，AS3提供的最基本的容器是<strong>Sprite</strong>，还有一个虚基类<strong>DisplayObjectContainer</strong>，但是这是一个虚基类且不能接受鼠标事件，所以为了方便（我觉得程序员的东西就应该方便自己）直接继承<strong>Sprite</strong>，但是<strong>Sprite</strong>有一个比较尴尬的问题就是不能设置大小尺寸，这里用到<code>scrollRect</code>属性来控制尺寸，<code>scrollRect</code>属性可以裁剪视图并对视图做滚动处理，更多信息谷歌。</p>
+<h3 id="如何提高渲染效率">如何提高渲染效率</h3>
+<p>对于组件属性修改的响应，比较直接的想法就是，在修改的时候就做出响应并做响应的处理，但是这样做的话效率比较低，可能在同一帧中对同一属性或者方法中调用多次那么这段逻辑就要处理多次了。<br>这里使用AS中较高级的用法<code>Render</code>事件，每一个显示对象都会监听到这个事件，在显示对象渲染之前这是处理逻辑的最后一次机会。每次需要<code>DisplayObject</code>触发<code>render</code>事时，都要调用一次<code>stage.invalidate();</code><br>所以在渲染之前统一处理显示逻辑可以减少很多重复的代码，定义一个<code>callLater</code>函数，所有需要延迟处理的逻辑调用这个函数，签名：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">callLater</span><span class="params">(call:Function, <span class="rest_arg">...args</span>)</span><span class="type">:void</span></span>;</div></pre></td></tr></table></figure>
 
-<p>刷新就可以看到了.</p>
+<p>但是也有可能同一个函数<code>call</code>被调用多次，所以做一个判断只需要对同一个函数执行一次，传递的参数为最后修改的，不过这个参数一般是全局定义的，这样执行的效率会高很多。</p>
+<h3 id="设置组件的尺寸">设置组件的尺寸</h3>
+<p>组件<code>width</code>和<code>height</code>属性要被重写<br><code>get</code>方法：</p>
+<blockquote>
+<p>如果没有设置过尺寸就返回所有可视的子视图占得大小，就是一个<code>for</code>循环，用所有子视图的坐标加宽高。</p>
+</blockquote>
+<p><code>set</code>方法</p>
+<blockquote>
+<p>设置尺寸的时候重新设置<code>scrollRect</code>属性，这个属性可以裁剪视图显示，然后延迟布局组件内部布局。</p>
+</blockquote>
+<h3 id="组件内部事件管理">组件内部事件管理</h3>
+<p><strong>组件内部也会有事件管理并抛出，所以内部事件也需要管理不然就会有内存泄露了，但是这些管理不应该由使用者去关心，在内部管理对使用者是透明的。</strong></p>
+<ol>
+<li>显示对象在添加到父容器的时候才启用内部事件的监听，一种是自己监听<code>addToStage</code>事件，但是这个事件也需要被管理， 在逻辑上会有一个死结，所以重新定义一个<code>addToParent</code>函数，内部调用<code>addEvents</code>，这个函数集中监听了内部事件，在被添加到父容器的时候就会监听内部的必要事件。</li>
+<li>内部事件何时被移除。以往删除显示对象需要先判断显示对象的<code>parent</code>属性是否为<code>null</code>再删除这个显示对象，自定义组件新增函数:</li>
+</ol>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">removeFromParent</span><span class="params">(clear:true)</span><span class="type">:void</span></span></div></pre></td></tr></table></figure>
+
+<p>内部做一个判断可以减少很多重复的代码，并且可以通过<code>clear</code>参数判断是否移除内部事件<code>dispose</code>函数。</p>
+<h2 id="常用属性">常用属性</h2>
+<ul>
+<li><code>enable</code>:是否禁用组件，禁用鼠标事件并且改变组件外观。</li>
+<li><code>tip</code>:鼠标提示，提示跟随鼠标在组件内部移动，涉及内部事件。</li>
+<li><code>heigth/width</code>:重写宽高，不要调用<code>super.width/height=value</code>，否则组件在设置宽高的时候不见。</li>
+<li><code>displayWidth/Height</code>:组件的显示尺寸，就是看到的大小，宽高乘以缩放值就是显示大小。</li>
+<li><code>skin</code>:组件的皮肤。</li>
+</ul>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -121,14 +137,14 @@ npm install hexo -g命令在Mac下需要管理员权限所以就是sudo npm inst
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/hexo/">hexo</a>
+  <a class="article-category-link" href="/categories/ActionScript3-0/">ActionScript3.0</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="/2014/10/24/finish-blog/" data-title="搭建Hexo blog总结 | 行走的力量" data-tsina="null" class="share clearfix">
+  <div data-url="/2014/10/25/about-flash-UI/" data-title="自定义AS3UI组件--前言 | 行走的力量" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -137,14 +153,14 @@ npm install hexo -g命令在Mac下需要管理员权限所以就是sudo npm inst
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2014/10/25/about-flash-UI/" title="自定义AS3UI组件--前言">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  自定义AS3UI组件--前言</span>
+
+<div class="next">
+<a href="/2014/10/24/finish-blog/"  title="搭建Hexo blog总结">
+ <strong>NEXT:</strong><br/> 
+ <span>搭建Hexo blog总结
+</span>
 </a>
 </div>
-
 
 </nav>
 
@@ -158,7 +174,7 @@ npm install hexo -g命令在Mac下需要管理员权限所以就是sudo npm inst
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#搭建环境"><span class="toc-number">1.</span> <span class="toc-text">搭建环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装hexo出错"><span class="toc-number">2.</span> <span class="toc-text">安装hexo出错</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用pacman主题"><span class="toc-number">3.</span> <span class="toc-text">使用pacman主题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用categories功能"><span class="toc-number">3.1.</span> <span class="toc-text">使用categories功能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加新浪微博widget(微博秀)"><span class="toc-number">4.</span> <span class="toc-text">添加新浪微博widget(微博秀)</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基类需要解决的问题"><span class="toc-number">2.</span> <span class="toc-text">基类需要解决的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何提高渲染效率"><span class="toc-number">2.1.</span> <span class="toc-text">如何提高渲染效率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置组件的尺寸"><span class="toc-number">2.2.</span> <span class="toc-text">设置组件的尺寸</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#组件内部事件管理"><span class="toc-number">2.3.</span> <span class="toc-text">组件内部事件管理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用属性"><span class="toc-number">3.</span> <span class="toc-text">常用属性</span></a></li></ol>
   </div>
 
 <div id="asidepart">
