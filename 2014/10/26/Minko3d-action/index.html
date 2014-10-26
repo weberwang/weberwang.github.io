@@ -4,17 +4,13 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>搭建Hexo blog总结 | 行走的力量</title>
+    <title>动画类 | 行走的力量</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Weber Wang">
     
-    <meta name="description" content="搭建环境
-安装环境是OS X Yosemite
-安装hexo出错
-npm install hexo -g命令在Mac下需要管理员权限所以就是sudo npm install hexo -g
-使用pacman主题
-这个主题还是挺好看的，虽然不如light主题的简洁，但是那个转动的头像挺有意思的，哈哈。">
+    <meta name="description" content="minko对显示对象的控制均是由控制器所控制的，动画也不例外—AnimationController类是控制对象动画的类。AnimationController构造函数签名
+1public function AnimationController(timelines      : Vector.&amp;l">
     
     
     
@@ -79,15 +75,15 @@ npm install hexo -g命令在Mac下需要管理员权限所以就是sudo npm inst
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/10/24/finish-blog/" title="搭建Hexo blog总结" itemprop="url">搭建Hexo blog总结</a>
+      <a href="/2014/10/26/Minko3d-action/" title="动画类" itemprop="url">动画类</a>
   </h1>
   <p class="article-author">By
     
       <a href="" title="Weber Wang">Weber Wang</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-10-24T15:22:55.000Z" itemprop="datePublished">10月 24 2014</time>
-    更新日期:<time datetime="2014-10-25T06:47:39.000Z" itemprop="dateModified">10月 25 2014</time>
+    <time datetime="2014-10-26T14:46:16.000Z" itemprop="datePublished">10月 26 2014</time>
+    更新日期:<time datetime="2014-10-26T14:50:03.000Z" itemprop="dateModified">10月 26 2014</time>
     
   </p>
 </header>
@@ -96,26 +92,19 @@ npm install hexo -g命令在Mac下需要管理员权限所以就是sudo npm inst
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#搭建环境"><span class="toc-number">1.</span> <span class="toc-text">搭建环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装hexo出错"><span class="toc-number">2.</span> <span class="toc-text">安装hexo出错</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用pacman主题"><span class="toc-number">3.</span> <span class="toc-text">使用pacman主题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用categories功能"><span class="toc-number">3.1.</span> <span class="toc-text">使用categories功能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加新浪微博widget(微博秀)"><span class="toc-number">4.</span> <span class="toc-text">添加新浪微博widget(微博秀)</span></a></li></ol>
+		
 		</div>
 		
-		<h2 id="搭建环境">搭建环境</h2>
-<p>安装环境是<strong><em>OS X Yosemite</em></strong></p>
-<h2 id="安装hexo出错">安装hexo出错</h2>
-<p><code>npm install hexo -g</code>命令在Mac下需要管理员权限所以就是<code>sudo npm install hexo -g</code></p>
-<h2 id="使用pacman主题">使用pacman主题</h2>
-<p>这个主题还是挺好看的，虽然不如<a href="https://github.com/hexojs/hexo-theme-light" target="_blank" rel="external">light</a>主题的简洁，但是那个转动的头像挺有意思的，哈哈。</p>
-<h3 id="使用categories功能">使用categories功能</h3>
-<p>因为是第一次搭建个人博客，所以用了主题之后不知道这个文章是怎么到分类里面去得，按照配置文件的说明是新建<code>categories</code>文件夹到<code>../source</code>.但是在<code>pacman</code>这个文件夹下折腾了半天，崩溃，原来是在博客的根目录下得<code>source</code>文件下新建，然后新建<code>index.md</code>文件就可以了。</p>
-<h2 id="添加新浪微博widget(微博秀)">添加新浪微博widget(微博秀)</h2>
-<ol>
-<li>去<a href="http://app.weibo.com/tool/weiboshow" target="_blank" rel="external">新浪微博开放平台</a>设置和生成微博秀代码。</li>
-<li>在<code>themes/pacman/layout/_widget</code>中新建名为<code>weibo.ejs</code>的文件，将刚才的代码直接保存到这里。</li>
-<li>在<code>themes/pacman/_config.yml</code>中，添加如下：</li>
-</ol>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">widgets:</div><div class="line"><span class="bullet">- </span>weibo</div></pre></td></tr></table></figure>
+		<p>minko对显示对象的控制均是由控制器所控制的，动画也不例外—AnimationController类是控制对象动画的类。AnimationController构造函数签名</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">function</span> AnimationController(timelines      : Vector.&lt;ITimeline&gt;,            <span class="keyword">loop</span>          : <span class="built_in">Boolean</span>     = <span class="literal">true</span>)</div></pre></td></tr></table></figure>
 
-<p>刷新就可以看到了.</p>
+<p>实现ITimeline接口的vector，是否循环loop。和ITimeline相关的类在package aerys.minko.type.animation.timeline包内。来看看例子中两个类 </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> transforms : Vector.&lt;Matrix4x4&gt;     = <span class="keyword">new</span> &lt;Matrix4x4&gt;[</div><div class="line">                    <span class="keyword">new</span> Matrix4x4(),</div><div class="line">                    <span class="keyword">new</span> Matrix4x4().appendScale(<span class="number">0.5</span>, <span class="number">0.5</span>, <span class="number">0.5</span>),</div><div class="line">                    <span class="keyword">new</span> Matrix4x4()</div><div class="line">               ];</div><div class="line">               <span class="keyword">var</span> alphas : Vector.&lt;<span class="built_in">Number</span>&gt; = <span class="keyword">new</span> &lt;<span class="built_in">Number</span>&gt;[<span class="number">1.</span>, <span class="number">.25</span>, <span class="number">1</span>];</div><div class="line">               <span class="keyword">var</span> animationCtrl : AnimationController = <span class="keyword">new</span> AnimationController(</div><div class="line">                    <span class="keyword">new</span> &lt;ITimeline&gt;[</div><div class="line">                         <span class="keyword">new</span> MatrixRegularTimeline(<span class="string">'transform'</span>, <span class="number">1000</span>, transforms, <span class="literal">true</span>),<span class="keyword">new</span> ScalarRegularTimeline(<span class="string">'material.diffuseTransform.alpha'</span>, <span class="number">1000</span>, alphas)</div><div class="line">                    ]</div><div class="line">               )</div></pre></td></tr></table></figure>
+
+<p><code>MatrixRegularTimeline</code>：矩阵规律变化类，第一个参数是要实现动画对象的属性，先清楚对象类型是否具有此属性，否则会报错这个你自己负责。第二个参数是持续多长时间，单位是毫秒；第三个是Matrix4x4的Vector对象，包含你要改变对象的Matrix4x4属性，是依次执行的，所以上面就是从原来的大小缩小一倍再还原的过程；第四个参数是是否修改缩放，在这里  <code>new Matrix4x4().appendScale(0.5, 0.5, 0.5)</code>就是修改了缩放，必须设置成true了，要不然干吗用这个么个矩阵啊。<br>ScalarRegularTimeline：<br>修改对象属性数值的列，第一个参数是属性名，这个属性必须是number或者int，uint等数值类型的，第二个是持续时间；第三个是修改数字的Vector对象，也是依次执行的。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">var</span> cube <span class="value">: Mesh = new <span class="function">Mesh</span>(</span></div><div class="line">                    CubeGeometry.cubeGeometry,</div><div class="line">                    new <span class="function">BasicMaterial</span>({</div><div class="line">                         diffuseMap                : TextureLoader.<span class="function">loadClass</span>(EMBED_TEXTURE),</div><div class="line">                         diffuseColor          : <span class="number">0</span>xffffffff,</div><div class="line">                         diffuseTransform     : new <span class="function">HLSAMatrix4x4</span>(),</div><div class="line">                         blending               : Blending.ALPHA</div><div class="line">                    })</div><div class="line">               );</div></pre></td></tr></table></figure>
+
+<p>在上面的ScalarRegularTimeline中使用属性material.diffuseTransform.alpha，cube 是一个网格，minko内置了好几种网格形状，这里使用立方体形状，材质是BasicMaterial对应上面的material属性，BasicMaterial对象具有diffuseTransform 属性，上面的例子中diffuseTransform对象是HLSAMatrix4x4类型具有alpha属性，和ScalarRegularTimeline类中第一个构造函数是对应的，所以你在写这些动画的时候要清楚你的对象是否真得具有此属性。<br>实现ITimeline接口的类都大同小异，基本差不多，ScalarTimeline类是一个用时刻表控制的，第二个参数就是时刻表，就是在什么时候做什么事，各个时刻之间是平滑变化的，如果你把两个时刻设置成了一样那么第一个就看不到了。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -123,14 +112,14 @@ npm install hexo -g命令在Mac下需要管理员权限所以就是sudo npm inst
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/hexo/">hexo</a>
+  <a class="article-category-link" href="/categories/Minko3D/">Minko3D</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="/2014/10/24/finish-blog/" data-title="搭建Hexo blog总结 | 行走的力量" data-tsina="null" class="share clearfix">
+  <div data-url="/2014/10/26/Minko3d-action/" data-title="动画类 | 行走的力量" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -140,13 +129,21 @@ npm install hexo -g命令在Mac下需要管理员权限所以就是sudo npm inst
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2014/10/25/about-flash-UI/" title="自定义AS3UI组件--前言">
+ <a href="/2014/10/26/Minko3d-mesh/" title="网格">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  自定义AS3UI组件--前言</span>
+  网格</span>
 </a>
 </div>
 
+
+<div class="next">
+<a href="/2014/10/26/Minko3d-mouse/"  title="接受鼠标事件">
+ <strong>NEXT:</strong><br/> 
+ <span>接受鼠标事件
+</span>
+</a>
+</div>
 
 </nav>
 
@@ -160,7 +157,7 @@ npm install hexo -g命令在Mac下需要管理员权限所以就是sudo npm inst
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#搭建环境"><span class="toc-number">1.</span> <span class="toc-text">搭建环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装hexo出错"><span class="toc-number">2.</span> <span class="toc-text">安装hexo出错</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用pacman主题"><span class="toc-number">3.</span> <span class="toc-text">使用pacman主题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用categories功能"><span class="toc-number">3.1.</span> <span class="toc-text">使用categories功能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加新浪微博widget(微博秀)"><span class="toc-number">4.</span> <span class="toc-text">添加新浪微博widget(微博秀)</span></a></li></ol>
+  
   </div>
 
 <div id="asidepart">

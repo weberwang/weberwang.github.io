@@ -4,7 +4,7 @@
   <subtitle><![CDATA[一直走，路总会笑]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="/"/>
-  <updated>2014-10-25T09:09:56.697Z</updated>
+  <updated>2014-10-26T14:55:44.577Z</updated>
   <id>/</id>
   
   <author>
@@ -13,6 +13,115 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[网格]]></title>
+    <link href="/2014/10/26/Minko3d-mesh/"/>
+    <id>/2014/10/26/Minko3d-mesh/</id>
+    <published>2014-10-26T14:51:18.000Z</published>
+    <updated>2014-10-26T14:51:44.000Z</updated>
+    <content type="html"><![CDATA[<p>源码中运用到mesh—网格的代码：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> cube : Mesh = <span class="keyword">new</span> Mesh(</div><div class="line">CubeGeometry.cubeGeometry,</div><div class="line"><span class="keyword">new</span> BasicMaterial({</div><div class="line">diffuseMap : TextureLoader.loadClass(EMBED_TEXTURE),</div><div class="line">diffuseColor: <span class="number">0xffffffff</span>,</div><div class="line">diffuseTransform: <span class="keyword">new</span> HLSAMatrix4x4(),</div><div class="line">blending: Blending.ALPHA</div><div class="line">})；</div></pre></td></tr></table></figure>
+
+<p><code>Mesh</code>类的构造函数需要三个参数，第一个是网格的几何形状，如立方体，Minko中内置了好几种常用的形状，Gemetry保存了3D对象的所有顶点坐标,BasicMaterial是一个比较基本的材质类，使各个面都具有相同的纹理渲染，以后对每个文件再做深入的研究。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>源码中运用到mesh—网格的代码：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div]]>
+    </summary>
+    
+      <category term="Minko3D" scheme="/categories/Minko3D/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[动画类]]></title>
+    <link href="/2014/10/26/Minko3d-action/"/>
+    <id>/2014/10/26/Minko3d-action/</id>
+    <published>2014-10-26T14:46:16.000Z</published>
+    <updated>2014-10-26T14:50:03.000Z</updated>
+    <content type="html"><![CDATA[<p>minko对显示对象的控制均是由控制器所控制的，动画也不例外—AnimationController类是控制对象动画的类。AnimationController构造函数签名</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">function</span> AnimationController(timelines      : Vector.&lt;ITimeline&gt;,            <span class="keyword">loop</span>          : <span class="built_in">Boolean</span>     = <span class="literal">true</span>)</div></pre></td></tr></table></figure>
+
+<p>实现ITimeline接口的vector，是否循环loop。和ITimeline相关的类在package aerys.minko.type.animation.timeline包内。来看看例子中两个类 </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> transforms : Vector.&lt;Matrix4x4&gt;     = <span class="keyword">new</span> &lt;Matrix4x4&gt;[</div><div class="line">                    <span class="keyword">new</span> Matrix4x4(),</div><div class="line">                    <span class="keyword">new</span> Matrix4x4().appendScale(<span class="number">0.5</span>, <span class="number">0.5</span>, <span class="number">0.5</span>),</div><div class="line">                    <span class="keyword">new</span> Matrix4x4()</div><div class="line">               ];</div><div class="line">               <span class="keyword">var</span> alphas : Vector.&lt;<span class="built_in">Number</span>&gt; = <span class="keyword">new</span> &lt;<span class="built_in">Number</span>&gt;[<span class="number">1.</span>, <span class="number">.25</span>, <span class="number">1</span>];</div><div class="line">               <span class="keyword">var</span> animationCtrl : AnimationController = <span class="keyword">new</span> AnimationController(</div><div class="line">                    <span class="keyword">new</span> &lt;ITimeline&gt;[</div><div class="line">                         <span class="keyword">new</span> MatrixRegularTimeline(<span class="string">'transform'</span>, <span class="number">1000</span>, transforms, <span class="literal">true</span>),<span class="keyword">new</span> ScalarRegularTimeline(<span class="string">'material.diffuseTransform.alpha'</span>, <span class="number">1000</span>, alphas)</div><div class="line">                    ]</div><div class="line">               )</div></pre></td></tr></table></figure>
+
+<p><code>MatrixRegularTimeline</code>：矩阵规律变化类，第一个参数是要实现动画对象的属性，先清楚对象类型是否具有此属性，否则会报错这个你自己负责。第二个参数是持续多长时间，单位是毫秒；第三个是Matrix4x4的Vector对象，包含你要改变对象的Matrix4x4属性，是依次执行的，所以上面就是从原来的大小缩小一倍再还原的过程；第四个参数是是否修改缩放，在这里  <code>new Matrix4x4().appendScale(0.5, 0.5, 0.5)</code>就是修改了缩放，必须设置成true了，要不然干吗用这个么个矩阵啊。<br>ScalarRegularTimeline：<br>修改对象属性数值的列，第一个参数是属性名，这个属性必须是number或者int，uint等数值类型的，第二个是持续时间；第三个是修改数字的Vector对象，也是依次执行的。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">var</span> cube <span class="value">: Mesh = new <span class="function">Mesh</span>(</span></div><div class="line">                    CubeGeometry.cubeGeometry,</div><div class="line">                    new <span class="function">BasicMaterial</span>({</div><div class="line">                         diffuseMap                : TextureLoader.<span class="function">loadClass</span>(EMBED_TEXTURE),</div><div class="line">                         diffuseColor          : <span class="number">0</span>xffffffff,</div><div class="line">                         diffuseTransform     : new <span class="function">HLSAMatrix4x4</span>(),</div><div class="line">                         blending               : Blending.ALPHA</div><div class="line">                    })</div><div class="line">               );</div></pre></td></tr></table></figure>
+
+<p>在上面的ScalarRegularTimeline中使用属性material.diffuseTransform.alpha，cube 是一个网格，minko内置了好几种网格形状，这里使用立方体形状，材质是BasicMaterial对应上面的material属性，BasicMaterial对象具有diffuseTransform 属性，上面的例子中diffuseTransform对象是HLSAMatrix4x4类型具有alpha属性，和ScalarRegularTimeline类中第一个构造函数是对应的，所以你在写这些动画的时候要清楚你的对象是否真得具有此属性。<br>实现ITimeline接口的类都大同小异，基本差不多，ScalarTimeline类是一个用时刻表控制的，第二个参数就是时刻表，就是在什么时候做什么事，各个时刻之间是平滑变化的，如果你把两个时刻设置成了一样那么第一个就看不到了。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>minko对显示对象的控制均是由控制器所控制的，动画也不例外—AnimationController类是控制对象动画的类。AnimationController构造函数签名</p>
+<figure class="highlight"><table><tr><td class]]>
+    </summary>
+    
+      <category term="Minko3D" scheme="/categories/Minko3D/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[接受鼠标事件]]></title>
+    <link href="/2014/10/26/Minko3d-mouse/"/>
+    <id>/2014/10/26/Minko3d-mouse/</id>
+    <published>2014-10-26T14:42:45.000Z</published>
+    <updated>2014-10-26T14:45:40.000Z</updated>
+    <content type="html"><![CDATA[<p><code>PickingController</code>，鼠标信号采集控制器，可以响应鼠标事件，必需绑定到一个实现IEventDispatcher接口对象上，再minko中只有viewprot了，通过viewprot试图接口响应各种鼠标事件，可以将这个控制器绑定到某一显示对象上或者一个组group等，<br>响应回调函数的接口签名</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span><span class="params">(ctrl : PickingController, mesh : Mesh, mouseX : Number, mouseY : Number)</span> <span class="type">: void</span></span></div></pre></td></tr></table></figure>
+
+<p>第一个是控制器本身，第二个是鼠标下的网格，第三第四是鼠标在bindDefaultInputs绑定的对象的局部坐标。<br>官网对这个类的<a href="http://doc.minko.io/wiki/Add_Pixel_Perfect_Mouse_Interactivity/" target="_blank" rel="external">讲解</a>。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><code>PickingController</code>，鼠标信号采集控制器，可以响应鼠标事件，必需绑定到一个实现IEventDispatcher接口对象上，再minko中只有viewprot了，通过viewprot试图接口响应各种鼠标事件，可以将这个控制器绑定到某一显]]>
+    </summary>
+    
+      <category term="Minko3D" scheme="/categories/Minko3D/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[light（1）]]></title>
+    <link href="/2014/10/26/Minko3d-light/"/>
+    <id>/2014/10/26/Minko3d-light/</id>
+    <published>2014-10-26T14:39:26.000Z</published>
+    <updated>2014-10-26T14:41:35.000Z</updated>
+    <content type="html"><![CDATA[<p><code>SpotLight</code>，聚光灯，顾名思义，像聚光灯一样，一个点出发，光线是不平行的，有一个外圈和内圈，类似用过的可以调节聚光的手电:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var spotLight: <span class="variable">SpotLight=</span> new SpotLight();</div><div class="line">spotLight.<span class="variable">diffuse=</span> .<span class="number">2</span>;</div><div class="line">spotLight.<span class="variable">shadowCastingType=</span> ShadowMappingType.MATRIX;</div><div class="line">spotLight.<span class="variable">shadowMapSize=</span> <span class="number">1024</span>;</div><div class="line">spotLight.<span class="variable">outerRadius=</span> Math.PI / <span class="number">2</span>;</div><div class="line">spotLight.<span class="variable">innerRadius=</span> <span class="number">0</span>;</div><div class="line">spotLight.<span class="variable">shadowMapQuality=</span> ShadowMappingQuality.LOW;</div></pre></td></tr></table></figure>
+
+
+<p>diffuse光线的强度，越大越亮；<br>shadowCastingType,投影类型，影响影子的形状；<br>shadowMapSize，投影纹理的长宽，是一个正方形的纹理；outerRadius外圈半径；<br>innerRadius内圈半径；<br>shadowMapQuality投影质量，为了节省性能，一般用low就行</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><code>SpotLight</code>，聚光灯，顾名思义，像聚光灯一样，一个点出发，光线是不平行的，有一个外圈和内圈，类似用过的可以调节聚光的手电:</p>
+<figure class="highlight"><table><tr><td class="gutter"]]>
+    </summary>
+    
+      <category term="Minko3D" scheme="/categories/Minko3D/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Minko3d引擎Demo学习]]></title>
+    <link href="/2014/10/26/Minko3d-entry/"/>
+    <id>/2014/10/26/Minko3d-entry/</id>
+    <published>2014-10-26T14:30:24.000Z</published>
+    <updated>2014-10-26T14:38:41.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="一个flash3d框架">一个flash3d框架</h2>
+<p>比较早得时候学习的一个框架，当时和其他比较出名的3D框架比如away3d对比了下，觉得这个上手难度低而且封装的比较好，就开始学习一段时间，这个团队现在做了c++版本的引擎，也是跨平台的。之前的笔记现在搬过来。</p>
+<h2 id="Demo入口">Demo入口</h2>
+<p>MinkoExampleApplication文件是所有实例主文件的基类，一个minko程序的大致框架流程基本就是这样。<br>所有的现实对象继承AbstractSceneNode并实现了ISceneNode接口，如果你想自定义一个minko的现实对象也要这样做。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">initializeScene</span><span class="params">()</span> <span class="type">: void</span></span></div><div class="line">{</div><div class="line">     _camera = <span class="keyword">new</span> Camera();</div><div class="line">     _cameraController = <span class="keyword">new</span> ArcBallController();</div><div class="line">     _cameraController.bindDefaultControls(stage);</div><div class="line">     _cameraController.minDistance = <span class="number">1</span>;</div><div class="line">     _cameraController.yaw = Math.PI * -<span class="number">.5</span>;</div><div class="line">     _cameraController.pitch = Math.PI / <span class="number">2</span>;</div><div class="line">     _cameraController.distance = <span class="number">5</span>;</div><div class="line">     camera.addController(_cameraController);              </div><div class="line">     _scene.addChild(camera);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>Camera就是一个显示对象，一般来说我们不需要修改这个类，除非你有一些奇葩的想法；<br>并且在这里添加了一个控制器—响应鼠标操作的控制器，这个类会经常用到，会响应鼠标点击，滑轮滚动以及鼠标按下拖动事件，下面是对一些成员的说明：<br>     bindDefaultControls方法，参数是IEventDispatcher类型，所以是flash的实现了改接口的原生对象；<br>     minDistance是摄像机到显示对象的最小距离，对应一个最大距离；<br>     yaw 偏离角度，影响，x和z；<br>     pitch  一个仰角，弧度制，大于0为俯视，只影响与Y的角度；<br>     distance 与现实对象间的距离，大于0时对象在摄像机前面；<br>camera实现了ISceneNode接口，所以可以添加控制器，现实对象的响应都是在控制器中实现的，并可以添加多个控制器。<br>Scene类，minko中可以渲染其他显示对象的类，因为实现了RenderingController控制器，RenderingController类是一个渲染实现类，最终使用stage3d对象的是DrawCall类，想自定义一个渲染对象继承Scene类即可。<br>还有一个重要的类Viewport，这是连接原生显示对象和minko的类，看名字你就懂的，这个类封装了调用了Context3DResource—一个对3D对象管理的类，但是我们无法访问，有需要请用自己的双手解决。<br>MinkoExampleApplication文件还是比较简单，看下就会用了。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="一个flash3d框架">一个flash3d框架</h2>
+<p>比较早得时候学习的一个框架，当时和其他比较出名的3D框架比如away3d对比了下，觉得这个上手难度低而且封装的比较好，就开始学习一段时间，这个团队现在做了c++版本的引擎，也是跨平台的。之前的笔记现]]>
+    </summary>
+    
+      <category term="Minko3D" scheme="/categories/Minko3D/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[自定义AS3UI组件--前言]]></title>

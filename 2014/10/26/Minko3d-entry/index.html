@@ -4,17 +4,15 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>搭建Hexo blog总结 | 行走的力量</title>
+    <title>Minko3d引擎Demo学习 | 行走的力量</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Weber Wang">
     
-    <meta name="description" content="搭建环境
-安装环境是OS X Yosemite
-安装hexo出错
-npm install hexo -g命令在Mac下需要管理员权限所以就是sudo npm install hexo -g
-使用pacman主题
-这个主题还是挺好看的，虽然不如light主题的简洁，但是那个转动的头像挺有意思的，哈哈。">
+    <meta name="description" content="一个flash3d框架
+比较早得时候学习的一个框架，当时和其他比较出名的3D框架比如away3d对比了下，觉得这个上手难度低而且封装的比较好，就开始学习一段时间，这个团队现在做了c++版本的引擎，也是跨平台的。之前的笔记现在搬过来。
+Demo入口
+MinkoExampleApplication文件是">
     
     
     
@@ -79,15 +77,15 @@ npm install hexo -g命令在Mac下需要管理员权限所以就是sudo npm inst
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/10/24/finish-blog/" title="搭建Hexo blog总结" itemprop="url">搭建Hexo blog总结</a>
+      <a href="/2014/10/26/Minko3d-entry/" title="Minko3d引擎Demo学习" itemprop="url">Minko3d引擎Demo学习</a>
   </h1>
   <p class="article-author">By
     
       <a href="" title="Weber Wang">Weber Wang</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-10-24T15:22:55.000Z" itemprop="datePublished">10月 24 2014</time>
-    更新日期:<time datetime="2014-10-25T06:47:39.000Z" itemprop="dateModified">10月 25 2014</time>
+    <time datetime="2014-10-26T14:30:24.000Z" itemprop="datePublished">10月 26 2014</time>
+    更新日期:<time datetime="2014-10-26T14:38:41.000Z" itemprop="dateModified">10月 26 2014</time>
     
   </p>
 </header>
@@ -96,26 +94,16 @@ npm install hexo -g命令在Mac下需要管理员权限所以就是sudo npm inst
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#搭建环境"><span class="toc-number">1.</span> <span class="toc-text">搭建环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装hexo出错"><span class="toc-number">2.</span> <span class="toc-text">安装hexo出错</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用pacman主题"><span class="toc-number">3.</span> <span class="toc-text">使用pacman主题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用categories功能"><span class="toc-number">3.1.</span> <span class="toc-text">使用categories功能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加新浪微博widget(微博秀)"><span class="toc-number">4.</span> <span class="toc-text">添加新浪微博widget(微博秀)</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一个flash3d框架"><span class="toc-number">1.</span> <span class="toc-text">一个flash3d框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Demo入口"><span class="toc-number">2.</span> <span class="toc-text">Demo入口</span></a></li></ol>
 		</div>
 		
-		<h2 id="搭建环境">搭建环境</h2>
-<p>安装环境是<strong><em>OS X Yosemite</em></strong></p>
-<h2 id="安装hexo出错">安装hexo出错</h2>
-<p><code>npm install hexo -g</code>命令在Mac下需要管理员权限所以就是<code>sudo npm install hexo -g</code></p>
-<h2 id="使用pacman主题">使用pacman主题</h2>
-<p>这个主题还是挺好看的，虽然不如<a href="https://github.com/hexojs/hexo-theme-light" target="_blank" rel="external">light</a>主题的简洁，但是那个转动的头像挺有意思的，哈哈。</p>
-<h3 id="使用categories功能">使用categories功能</h3>
-<p>因为是第一次搭建个人博客，所以用了主题之后不知道这个文章是怎么到分类里面去得，按照配置文件的说明是新建<code>categories</code>文件夹到<code>../source</code>.但是在<code>pacman</code>这个文件夹下折腾了半天，崩溃，原来是在博客的根目录下得<code>source</code>文件下新建，然后新建<code>index.md</code>文件就可以了。</p>
-<h2 id="添加新浪微博widget(微博秀)">添加新浪微博widget(微博秀)</h2>
-<ol>
-<li>去<a href="http://app.weibo.com/tool/weiboshow" target="_blank" rel="external">新浪微博开放平台</a>设置和生成微博秀代码。</li>
-<li>在<code>themes/pacman/layout/_widget</code>中新建名为<code>weibo.ejs</code>的文件，将刚才的代码直接保存到这里。</li>
-<li>在<code>themes/pacman/_config.yml</code>中，添加如下：</li>
-</ol>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">widgets:</div><div class="line"><span class="bullet">- </span>weibo</div></pre></td></tr></table></figure>
+		<h2 id="一个flash3d框架">一个flash3d框架</h2>
+<p>比较早得时候学习的一个框架，当时和其他比较出名的3D框架比如away3d对比了下，觉得这个上手难度低而且封装的比较好，就开始学习一段时间，这个团队现在做了c++版本的引擎，也是跨平台的。之前的笔记现在搬过来。</p>
+<h2 id="Demo入口">Demo入口</h2>
+<p>MinkoExampleApplication文件是所有实例主文件的基类，一个minko程序的大致框架流程基本就是这样。<br>所有的现实对象继承AbstractSceneNode并实现了ISceneNode接口，如果你想自定义一个minko的现实对象也要这样做。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">initializeScene</span><span class="params">()</span> <span class="type">: void</span></span></div><div class="line">{</div><div class="line">     _camera = <span class="keyword">new</span> Camera();</div><div class="line">     _cameraController = <span class="keyword">new</span> ArcBallController();</div><div class="line">     _cameraController.bindDefaultControls(stage);</div><div class="line">     _cameraController.minDistance = <span class="number">1</span>;</div><div class="line">     _cameraController.yaw = Math.PI * -<span class="number">.5</span>;</div><div class="line">     _cameraController.pitch = Math.PI / <span class="number">2</span>;</div><div class="line">     _cameraController.distance = <span class="number">5</span>;</div><div class="line">     camera.addController(_cameraController);              </div><div class="line">     _scene.addChild(camera);</div><div class="line">}</div></pre></td></tr></table></figure>
 
-<p>刷新就可以看到了.</p>
+<p>Camera就是一个显示对象，一般来说我们不需要修改这个类，除非你有一些奇葩的想法；<br>并且在这里添加了一个控制器—响应鼠标操作的控制器，这个类会经常用到，会响应鼠标点击，滑轮滚动以及鼠标按下拖动事件，下面是对一些成员的说明：<br>     bindDefaultControls方法，参数是IEventDispatcher类型，所以是flash的实现了改接口的原生对象；<br>     minDistance是摄像机到显示对象的最小距离，对应一个最大距离；<br>     yaw 偏离角度，影响，x和z；<br>     pitch  一个仰角，弧度制，大于0为俯视，只影响与Y的角度；<br>     distance 与现实对象间的距离，大于0时对象在摄像机前面；<br>camera实现了ISceneNode接口，所以可以添加控制器，现实对象的响应都是在控制器中实现的，并可以添加多个控制器。<br>Scene类，minko中可以渲染其他显示对象的类，因为实现了RenderingController控制器，RenderingController类是一个渲染实现类，最终使用stage3d对象的是DrawCall类，想自定义一个渲染对象继承Scene类即可。<br>还有一个重要的类Viewport，这是连接原生显示对象和minko的类，看名字你就懂的，这个类封装了调用了Context3DResource—一个对3D对象管理的类，但是我们无法访问，有需要请用自己的双手解决。<br>MinkoExampleApplication文件还是比较简单，看下就会用了。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -123,14 +111,14 @@ npm install hexo -g命令在Mac下需要管理员权限所以就是sudo npm inst
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/hexo/">hexo</a>
+  <a class="article-category-link" href="/categories/Minko3D/">Minko3D</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="/2014/10/24/finish-blog/" data-title="搭建Hexo blog总结 | 行走的力量" data-tsina="null" class="share clearfix">
+  <div data-url="/2014/10/26/Minko3d-entry/" data-title="Minko3d引擎Demo学习 | 行走的力量" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -140,13 +128,21 @@ npm install hexo -g命令在Mac下需要管理员权限所以就是sudo npm inst
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2014/10/25/about-flash-UI/" title="自定义AS3UI组件--前言">
+ <a href="/2014/10/26/Minko3d-light/" title="light（1）">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  自定义AS3UI组件--前言</span>
+  light（1）</span>
 </a>
 </div>
 
+
+<div class="next">
+<a href="/2014/10/25/about-flash-UI/"  title="自定义AS3UI组件--前言">
+ <strong>NEXT:</strong><br/> 
+ <span>自定义AS3UI组件--前言
+</span>
+</a>
+</div>
 
 </nav>
 
@@ -160,7 +156,7 @@ npm install hexo -g命令在Mac下需要管理员权限所以就是sudo npm inst
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#搭建环境"><span class="toc-number">1.</span> <span class="toc-text">搭建环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装hexo出错"><span class="toc-number">2.</span> <span class="toc-text">安装hexo出错</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用pacman主题"><span class="toc-number">3.</span> <span class="toc-text">使用pacman主题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用categories功能"><span class="toc-number">3.1.</span> <span class="toc-text">使用categories功能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加新浪微博widget(微博秀)"><span class="toc-number">4.</span> <span class="toc-text">添加新浪微博widget(微博秀)</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一个flash3d框架"><span class="toc-number">1.</span> <span class="toc-text">一个flash3d框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Demo入口"><span class="toc-number">2.</span> <span class="toc-text">Demo入口</span></a></li></ol>
   </div>
 
 <div id="asidepart">
