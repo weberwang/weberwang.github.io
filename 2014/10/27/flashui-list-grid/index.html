@@ -4,13 +4,15 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>网格 | 行走的力量</title>
+    <title>flash组件--List/Grid（1） | 行走的力量</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Weber Wang">
     
-    <meta name="description" content="源码中运用到mesh—网格的代码：
-12345678var cube : Mesh = new Mesh(CubeGeometry.cubeGeometry,new BasicMaterial({diffuseMap : TextureLoader.loadClass(EMBED_TEXTURE),">
+    <meta name="description" content="组件思考
+List DataGrid这两个组件在Flex中是相当重量级的组件，写得非常好，但是过于庞大。我们的游戏也由用到类似功能的组件—由数据驱动的组件。有时候数据量可能会比较大，组件的效率成了首要考虑的因素。
+抽象
+首先是数据源的问题，因为数据源的修改会直接影响到组件的现实问题，所以对于数据源的">
     
     
     
@@ -75,15 +77,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/10/26/Minko3d-mesh/" title="网格" itemprop="url">网格</a>
+      <a href="/2014/10/27/flashui-list-grid/" title="flash组件--List/Grid（1）" itemprop="url">flash组件--List/Grid（1）</a>
   </h1>
   <p class="article-author">By
     
       <a href="" title="Weber Wang">Weber Wang</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-10-26T14:51:18.000Z" itemprop="datePublished">10月 26 2014</time>
-    更新日期:<time datetime="2014-10-26T14:51:44.000Z" itemprop="dateModified">10月 26 2014</time>
+    <time datetime="2014-10-27T11:44:14.000Z" itemprop="datePublished">10月 27 2014</time>
+    更新日期:<time datetime="2014-10-29T14:03:19.000Z" itemprop="dateModified">10月 29 2014</time>
     
   </p>
 </header>
@@ -92,13 +94,25 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#组件思考"><span class="toc-number">1.</span> <span class="toc-text">组件思考</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#抽象"><span class="toc-number">1.1.</span> <span class="toc-text">抽象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现"><span class="toc-number">1.2.</span> <span class="toc-text">实现</span></a></li></ol></li></ol>
 		</div>
 		
-		<p>源码中运用到mesh—网格的代码：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> cube : Mesh = <span class="keyword">new</span> Mesh(</div><div class="line">CubeGeometry.cubeGeometry,</div><div class="line"><span class="keyword">new</span> BasicMaterial({</div><div class="line">diffuseMap : TextureLoader.loadClass(EMBED_TEXTURE),</div><div class="line">diffuseColor: <span class="number">0xffffffff</span>,</div><div class="line">diffuseTransform: <span class="keyword">new</span> HLSAMatrix4x4(),</div><div class="line">blending: Blending.ALPHA</div><div class="line">})；</div></pre></td></tr></table></figure>
+		<h2 id="组件思考">组件思考</h2>
+<p><code>List</code> <code>DataGrid</code>这两个组件在Flex中是相当重量级的组件，写得非常好，但是过于庞大。我们的游戏也由用到类似功能的组件—由数据驱动的组件。有时候数据量可能会比较大，组件的效率成了首要考虑的因素。</p>
+<h3 id="抽象">抽象</h3>
+<p>首先是数据源的问题，因为数据源的修改会直接影响到组件的现实问题，所以对于数据源的修改更新需要被组件所知道，但是AS提供的几个关系数据源的类都没有派发事件的能力，所以需要自己拓展一个数据源类来使用。</p>
+<p>其次是显示子对象的处理，和Flex一样也抽象一个<code>RenderItem</code>基类用作项呈示器，每一项数据都对应创建一个项呈示器的实例，内部负责创建和销毁。</p>
+<p>最后在视图滚动的时候数据源该如果创建子对象也是需要解决的.在视图滚动的时候如果更新显示对象以及滚动范围。</p>
+<h3 id="实现">实现</h3>
+<p><strong>数据源</strong>在被修改的时候需要通知组件做相对应的改变，新建一个类可以在数据源改变的时候派发事件。用一个<code>EventDispatch</code>封装一个<code>Array</code>的操作，内部重新实现<code>Array</code>的几个可以改变数据源的函数，比如<code>push</code>, <code>pop</code>等等，在改变数据源的时候派发事件即可在组件监听到并做出相对应的逻辑处理。</p>
+<p><strong>项呈示器</strong>每一个实例有包含一个数据源的子项数据，具有以下属性</p>
+<ul>
+<li><code>index</code>当前的索引</li>
+<li><code>data</code>数据项<br>并且实现一个接口，该接口有一个函数签名:</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">update</span><span class="params">(index:int, data:Object)</span><span class="type">:void</span></span>;</div></pre></td></tr></table></figure>
 
-<p><code>Mesh</code>类的构造函数需要三个参数，第一个是网格的几何形状，如立方体，Minko中内置了好几种常用的形状，Gemetry保存了3D对象的所有顶点坐标,BasicMaterial是一个比较基本的材质类，使各个面都具有相同的纹理渲染，以后对每个文件再做深入的研究。</p>
+<p>在组件的数据源需要重新复制到项呈示器的时候调用这个函数更新即可，每个项呈示器都需要在<code>update</code>函数中处理和数据有关的逻辑。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -106,14 +120,14 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/Minko3D/">Minko3D</a>
+  <a class="article-category-link" href="/categories/ActionScript3-0/">ActionScript3.0</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="/2014/10/26/Minko3d-mesh/" data-title="网格 | 行走的力量" data-tsina="null" class="share clearfix">
+  <div data-url="/2014/10/27/flashui-list-grid/" data-title="flash组件--List/Grid（1） | 行走的力量" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -122,19 +136,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2014/10/27/flashui-button/" title="flash组件--Button类族">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  flash组件--Button类族</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2014/10/26/Minko3d-action/"  title="动画类">
+<a href="/2014/10/27/flashui-bar/"  title="flash组件--按钮组">
  <strong>NEXT:</strong><br/> 
- <span>动画类
+ <span>flash组件--按钮组
 </span>
 </a>
 </div>
@@ -151,7 +157,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#组件思考"><span class="toc-number">1.</span> <span class="toc-text">组件思考</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#抽象"><span class="toc-number">1.1.</span> <span class="toc-text">抽象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现"><span class="toc-number">1.2.</span> <span class="toc-text">实现</span></a></li></ol></li></ol>
   </div>
 
 <div id="asidepart">

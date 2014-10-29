@@ -4,13 +4,15 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>网格 | 行走的力量</title>
+    <title>flash组件--Button类族 | 行走的力量</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Weber Wang">
     
-    <meta name="description" content="源码中运用到mesh—网格的代码：
-12345678var cube : Mesh = new Mesh(CubeGeometry.cubeGeometry,new BasicMaterial({diffuseMap : TextureLoader.loadClass(EMBED_TEXTURE),">
+    <meta name="description" content="组件思考
+Button这个组件在游戏中使用的超级多，一个现实区域，还可能有文字的显示，AS3自带的一个简单Button，SimpeButton，和名字一样很简单，处理三帧的显示，接受鼠标事件，但是可拓展性太小，而且没有获取子视图的API提供，所以重写一个。
+设计
+同样也是需要三帧显示，对应mouse">
     
     
     
@@ -75,15 +77,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/10/26/Minko3d-mesh/" title="网格" itemprop="url">网格</a>
+      <a href="/2014/10/27/flashui-button/" title="flash组件--Button类族" itemprop="url">flash组件--Button类族</a>
   </h1>
   <p class="article-author">By
     
       <a href="" title="Weber Wang">Weber Wang</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-10-26T14:51:18.000Z" itemprop="datePublished">10月 26 2014</time>
-    更新日期:<time datetime="2014-10-26T14:51:44.000Z" itemprop="dateModified">10月 26 2014</time>
+    <time datetime="2014-10-27T10:28:58.000Z" itemprop="datePublished">10月 27 2014</time>
+    更新日期:<time datetime="2014-10-27T11:17:29.000Z" itemprop="dateModified">10月 27 2014</time>
     
   </p>
 </header>
@@ -92,13 +94,30 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#组件思考"><span class="toc-number">1.</span> <span class="toc-text">组件思考</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#设计"><span class="toc-number">1.1.</span> <span class="toc-text">设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#抽象"><span class="toc-number">1.2.</span> <span class="toc-text">抽象</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Button"><span class="toc-number">1.2.1.</span> <span class="toc-text">Button</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CheckBox"><span class="toc-number">1.2.2.</span> <span class="toc-text">CheckBox</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RadioButton"><span class="toc-number">1.2.3.</span> <span class="toc-text">RadioButton</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用属性"><span class="toc-number">2.</span> <span class="toc-text">常用属性</span></a></li></ol>
 		</div>
 		
-		<p>源码中运用到mesh—网格的代码：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> cube : Mesh = <span class="keyword">new</span> Mesh(</div><div class="line">CubeGeometry.cubeGeometry,</div><div class="line"><span class="keyword">new</span> BasicMaterial({</div><div class="line">diffuseMap : TextureLoader.loadClass(EMBED_TEXTURE),</div><div class="line">diffuseColor: <span class="number">0xffffffff</span>,</div><div class="line">diffuseTransform: <span class="keyword">new</span> HLSAMatrix4x4(),</div><div class="line">blending: Blending.ALPHA</div><div class="line">})；</div></pre></td></tr></table></figure>
+		<h2 id="组件思考">组件思考</h2>
+<p><code>Button</code>这个组件在游戏中使用的超级多，一个现实区域，还可能有文字的显示，AS3自带的一个简单Button，SimpeButton，和名字一样很简单，处理三帧的显示，接受鼠标事件，但是可拓展性太小，而且没有获取子视图的API提供，所以重写一个。</p>
+<h3 id="设计">设计</h3>
+<p>同样也是需要三帧显示，对应<code>mouse_out</code>、<code>mouse_ove</code>、<code>mouse_dow</code>，当然你也可以让美术设计给更多，不过一般我们只需要三帧就可以了(这个和手机游戏中使用的三种状态的纹理差不多意思)。因为这三帧是分别对应三种鼠标事件的显示，所以内部需要监听和管理这三个事件，鼠标移上去可能还需要显示提示tip，这个在组件基类的时候已经处理过了，重写调用即可。事件在内部的监听一般会使用弱引用，就是<code>addEventListener</code>方法最后一个参数这是为<code>true</code>，这样在这个对象不在被使用的时候也会清除这个事件的。</p>
+<h3 id="抽象">抽象</h3>
+<p>因为历史原因，我们项目的工作流还是ps-&gt;flashcs-&gt;code，给到开发的美术资源都是fla文件，不过这种效率确实很高，所以按钮做成一个<code>MovieClip</code>用跳帧的方式去工作很方便，抽象一个基类<code>ButtonBase</code>,实现<code>IState</code>接口的唯一方法：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">changeState</span><span class="params">(state:int)</span><span class="type">:void</span></span>;</div></pre></td></tr></table></figure>
 
-<p><code>Mesh</code>类的构造函数需要三个参数，第一个是网格的几何形状，如立方体，Minko中内置了好几种常用的形状，Gemetry保存了3D对象的所有顶点坐标,BasicMaterial是一个比较基本的材质类，使各个面都具有相同的纹理渲染，以后对每个文件再做深入的研究。</p>
+<p>这个方法就是在处理特定的事件的时候改变按钮的状态，就是跳帧。<br>接下来在其他的按钮类族（<code>CheckBox</code> <code>RadioButton</code>）中也会去调这个函数，让整个按钮类族都变的很方便。</p>
+<h4 id="Button">Button</h4>
+<p>按照上面的思路写一个还是挺简单，其中要注意父类的<code>callLate</code>函数的调用。</p>
+<h4 id="CheckBox">CheckBox</h4>
+<p>比它的父类多了一种选中的状态，所以就多了三帧，而且还有一个选中属性<code>selected</code>，可读写，设置此值会影响组件的外观</p>
+<h4 id="RadioButton">RadioButton</h4>
+<p>单选的按钮，和<code>CheckBox</code>类似也是6帧，一般不会单独使用，因为不能通过点击自己来切换选中和未选中状态，所以添加到<code>RadioButtonGroup</code>类来使用。</p>
+<p><strong>项目中使用的按钮类用这三种就能全部涵盖进来了</strong></p>
+<h2 id="常用属性">常用属性</h2>
+<ul>
+<li><code>text</code>:设置按钮上的文字。</li>
+<li><code>slected</code>:是否选中状态(<code>CheckBox</code> <code>RadioButton</code>)。</li>
+</ul>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -106,14 +125,14 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/Minko3D/">Minko3D</a>
+  <a class="article-category-link" href="/categories/ActionScript3-0/">ActionScript3.0</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="/2014/10/26/Minko3d-mesh/" data-title="网格 | 行走的力量" data-tsina="null" class="share clearfix">
+  <div data-url="/2014/10/27/flashui-button/" data-title="flash组件--Button类族 | 行走的力量" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -123,18 +142,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2014/10/27/flashui-button/" title="flash组件--Button类族">
+ <a href="/2014/10/27/flashui-bar/" title="flash组件--按钮组">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  flash组件--Button类族</span>
+  flash组件--按钮组</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2014/10/26/Minko3d-action/"  title="动画类">
+<a href="/2014/10/26/Minko3d-mesh/"  title="网格">
  <strong>NEXT:</strong><br/> 
- <span>动画类
+ <span>网格
 </span>
 </a>
 </div>
@@ -151,7 +170,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#组件思考"><span class="toc-number">1.</span> <span class="toc-text">组件思考</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#设计"><span class="toc-number">1.1.</span> <span class="toc-text">设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#抽象"><span class="toc-number">1.2.</span> <span class="toc-text">抽象</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Button"><span class="toc-number">1.2.1.</span> <span class="toc-text">Button</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CheckBox"><span class="toc-number">1.2.2.</span> <span class="toc-text">CheckBox</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RadioButton"><span class="toc-number">1.2.3.</span> <span class="toc-text">RadioButton</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用属性"><span class="toc-number">2.</span> <span class="toc-text">常用属性</span></a></li></ol>
   </div>
 
 <div id="asidepart">

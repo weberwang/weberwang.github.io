@@ -4,13 +4,15 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>网格 | 行走的力量</title>
+    <title>flash组件--按钮组 | 行走的力量</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Weber Wang">
     
-    <meta name="description" content="源码中运用到mesh—网格的代码：
-12345678var cube : Mesh = new Mesh(CubeGeometry.cubeGeometry,new BasicMaterial({diffuseMap : TextureLoader.loadClass(EMBED_TEXTURE),">
+    <meta name="description" content="组件思考
+有一些组件并不是独立的，它的改变需要去影响其他组件的显示或者内部的逻辑处理，比如Flex框架中的RadioButtonGroup,ButtonBar, ToggleButtonBar等等，内部视图都是互有联系的，游戏中也会用到类似的功能。用AS3代码写几个用到的。
+抽象
+组件内部的子视图之">
     
     
     
@@ -75,15 +77,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/10/26/Minko3d-mesh/" title="网格" itemprop="url">网格</a>
+      <a href="/2014/10/27/flashui-bar/" title="flash组件--按钮组" itemprop="url">flash组件--按钮组</a>
   </h1>
   <p class="article-author">By
     
       <a href="" title="Weber Wang">Weber Wang</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-10-26T14:51:18.000Z" itemprop="datePublished">10月 26 2014</time>
-    更新日期:<time datetime="2014-10-26T14:51:44.000Z" itemprop="dateModified">10月 26 2014</time>
+    <time datetime="2014-10-27T11:19:04.000Z" itemprop="datePublished">10月 27 2014</time>
+    更新日期:<time datetime="2014-10-27T11:43:15.000Z" itemprop="dateModified">10月 27 2014</time>
     
   </p>
 </header>
@@ -92,13 +94,25 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#组件思考"><span class="toc-number">1.</span> <span class="toc-text">组件思考</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#抽象"><span class="toc-number">1.1.</span> <span class="toc-text">抽象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现"><span class="toc-number">1.2.</span> <span class="toc-text">实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#RadioButtonGroup"><span class="toc-number">1.2.1.</span> <span class="toc-text">RadioButtonGroup</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ToggleButtonBar"><span class="toc-number">1.2.2.</span> <span class="toc-text">ToggleButtonBar</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用属性"><span class="toc-number">2.</span> <span class="toc-text">常用属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件"><span class="toc-number">3.</span> <span class="toc-text">事件</span></a></li></ol>
 		</div>
 		
-		<p>源码中运用到mesh—网格的代码：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> cube : Mesh = <span class="keyword">new</span> Mesh(</div><div class="line">CubeGeometry.cubeGeometry,</div><div class="line"><span class="keyword">new</span> BasicMaterial({</div><div class="line">diffuseMap : TextureLoader.loadClass(EMBED_TEXTURE),</div><div class="line">diffuseColor: <span class="number">0xffffffff</span>,</div><div class="line">diffuseTransform: <span class="keyword">new</span> HLSAMatrix4x4(),</div><div class="line">blending: Blending.ALPHA</div><div class="line">})；</div></pre></td></tr></table></figure>
-
-<p><code>Mesh</code>类的构造函数需要三个参数，第一个是网格的几何形状，如立方体，Minko中内置了好几种常用的形状，Gemetry保存了3D对象的所有顶点坐标,BasicMaterial是一个比较基本的材质类，使各个面都具有相同的纹理渲染，以后对每个文件再做深入的研究。</p>
+		<h2 id="组件思考">组件思考</h2>
+<p>有一些组件并不是独立的，它的改变需要去影响其他组件的显示或者内部的逻辑处理，比如Flex框架中的<code>RadioButtonGroup</code>,<code>ButtonBar</code>, <code>ToggleButtonBar</code>等等，内部视图都是互有联系的，游戏中也会用到类似的功能。用AS3代码写几个用到的。</p>
+<h3 id="抽象">抽象</h3>
+<p>组件内部的子视图之前的相互关系对使用者是透明的，需要什么样的功能内部管理就好，内部监听没一个显示对象的事件，显示对象通过<code>addItem</code>函数添加进去并且监听鼠标事件，可以有一个默认选中项的设定，这取决于开发者。选中项的改变也需要派发相对应的事件。</p>
+<h3 id="实现">实现</h3>
+<h4 id="RadioButtonGroup">RadioButtonGroup</h4>
+<p>这些按钮在选中逻辑上是互斥，所以只是逻辑上处理就可以了，集成<code>EventDispatch</code>基类是最轻便的，在有一个<code>radioButton</code>被选中的时候将上次被选中的按钮设置为未选中状态，同时记录选中的按钮。</p>
+<h4 id="ToggleButtonBar">ToggleButtonBar</h4>
+<p>某些按钮除了在选中状态上是互斥的以外，在显示上也会有相关，比如选中的按钮会在其他未选中按钮的上面，即<code>index</code>比其他的要高，所以他们应该同属一个父类，所以这个组件就继承ui组件的基类了，其他的逻辑和<code>RadioButtonGroup</code>保持一致即可。</p>
+<h2 id="常用属性">常用属性</h2>
+<ul>
+<li><code>selectIndex</code>:可读写，设置选中的索引，可添加进去的顺序有关.</li>
+<li><code>selectItem</code>:可读写，设置选中的按钮项，建议使用<code>selectIndex</code>属性。</li>
+</ul>
+<h2 id="事件">事件</h2>
+<p>在选中项发生改变的时候应该派发<code>selcetChange</code>事件，通知外部。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -106,14 +120,14 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/Minko3D/">Minko3D</a>
+  <a class="article-category-link" href="/categories/ActionScript3-0/">ActionScript3.0</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="/2014/10/26/Minko3d-mesh/" data-title="网格 | 行走的力量" data-tsina="null" class="share clearfix">
+  <div data-url="/2014/10/27/flashui-bar/" data-title="flash组件--按钮组 | 行走的力量" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -123,18 +137,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2014/10/27/flashui-button/" title="flash组件--Button类族">
+ <a href="/2014/10/27/flashui-list-grid/" title="flash组件--List/Grid（1）">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  flash组件--Button类族</span>
+  flash组件--List/Grid（1）</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2014/10/26/Minko3d-action/"  title="动画类">
+<a href="/2014/10/27/flashui-button/"  title="flash组件--Button类族">
  <strong>NEXT:</strong><br/> 
- <span>动画类
+ <span>flash组件--Button类族
 </span>
 </a>
 </div>
@@ -151,7 +165,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#组件思考"><span class="toc-number">1.</span> <span class="toc-text">组件思考</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#抽象"><span class="toc-number">1.1.</span> <span class="toc-text">抽象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现"><span class="toc-number">1.2.</span> <span class="toc-text">实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#RadioButtonGroup"><span class="toc-number">1.2.1.</span> <span class="toc-text">RadioButtonGroup</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ToggleButtonBar"><span class="toc-number">1.2.2.</span> <span class="toc-text">ToggleButtonBar</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用属性"><span class="toc-number">2.</span> <span class="toc-text">常用属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件"><span class="toc-number">3.</span> <span class="toc-text">事件</span></a></li></ol>
   </div>
 
 <div id="asidepart">

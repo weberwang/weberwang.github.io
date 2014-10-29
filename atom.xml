@@ -4,7 +4,7 @@
   <subtitle><![CDATA[一直走，路总会笑]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="/"/>
-  <updated>2014-10-26T15:05:11.572Z</updated>
+  <updated>2014-10-29T14:03:44.773Z</updated>
   <id>/</id>
   
   <author>
@@ -13,6 +13,107 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[flash组件--List/Grid（1）]]></title>
+    <link href="/2014/10/27/flashui-list-grid/"/>
+    <id>/2014/10/27/flashui-list-grid/</id>
+    <published>2014-10-27T11:44:14.000Z</published>
+    <updated>2014-10-29T14:03:19.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="组件思考">组件思考</h2>
+<p><code>List</code> <code>DataGrid</code>这两个组件在Flex中是相当重量级的组件，写得非常好，但是过于庞大。我们的游戏也由用到类似功能的组件—由数据驱动的组件。有时候数据量可能会比较大，组件的效率成了首要考虑的因素。</p>
+<h3 id="抽象">抽象</h3>
+<p>首先是数据源的问题，因为数据源的修改会直接影响到组件的现实问题，所以对于数据源的修改更新需要被组件所知道，但是AS提供的几个关系数据源的类都没有派发事件的能力，所以需要自己拓展一个数据源类来使用。</p>
+<p>其次是显示子对象的处理，和Flex一样也抽象一个<code>RenderItem</code>基类用作项呈示器，每一项数据都对应创建一个项呈示器的实例，内部负责创建和销毁。</p>
+<p>最后在视图滚动的时候数据源该如果创建子对象也是需要解决的.在视图滚动的时候如果更新显示对象以及滚动范围。</p>
+<h3 id="实现">实现</h3>
+<p><strong>数据源</strong>在被修改的时候需要通知组件做相对应的改变，新建一个类可以在数据源改变的时候派发事件。用一个<code>EventDispatch</code>封装一个<code>Array</code>的操作，内部重新实现<code>Array</code>的几个可以改变数据源的函数，比如<code>push</code>, <code>pop</code>等等，在改变数据源的时候派发事件即可在组件监听到并做出相对应的逻辑处理。</p>
+<p><strong>项呈示器</strong>每一个实例有包含一个数据源的子项数据，具有以下属性</p>
+<ul>
+<li><code>index</code>当前的索引</li>
+<li><code>data</code>数据项<br>并且实现一个接口，该接口有一个函数签名:</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">update</span><span class="params">(index:int, data:Object)</span><span class="type">:void</span></span>;</div></pre></td></tr></table></figure>
+
+<p>在组件的数据源需要重新复制到项呈示器的时候调用这个函数更新即可，每个项呈示器都需要在<code>update</code>函数中处理和数据有关的逻辑。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="组件思考">组件思考</h2>
+<p><code>List</code> <code>DataGrid</code>这两个组件在Flex中是相当重量级的组件，写得非常好，但是过于庞大。我们的游戏也由用到类似功能的组件—由数据驱动的组件。有时候数据量可能会比较大，组]]>
+    </summary>
+    
+      <category term="ActionScript3.0" scheme="/categories/ActionScript3-0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[flash组件--按钮组]]></title>
+    <link href="/2014/10/27/flashui-bar/"/>
+    <id>/2014/10/27/flashui-bar/</id>
+    <published>2014-10-27T11:19:04.000Z</published>
+    <updated>2014-10-27T11:43:15.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="组件思考">组件思考</h2>
+<p>有一些组件并不是独立的，它的改变需要去影响其他组件的显示或者内部的逻辑处理，比如Flex框架中的<code>RadioButtonGroup</code>,<code>ButtonBar</code>, <code>ToggleButtonBar</code>等等，内部视图都是互有联系的，游戏中也会用到类似的功能。用AS3代码写几个用到的。</p>
+<h3 id="抽象">抽象</h3>
+<p>组件内部的子视图之前的相互关系对使用者是透明的，需要什么样的功能内部管理就好，内部监听没一个显示对象的事件，显示对象通过<code>addItem</code>函数添加进去并且监听鼠标事件，可以有一个默认选中项的设定，这取决于开发者。选中项的改变也需要派发相对应的事件。</p>
+<h3 id="实现">实现</h3>
+<h4 id="RadioButtonGroup">RadioButtonGroup</h4>
+<p>这些按钮在选中逻辑上是互斥，所以只是逻辑上处理就可以了，集成<code>EventDispatch</code>基类是最轻便的，在有一个<code>radioButton</code>被选中的时候将上次被选中的按钮设置为未选中状态，同时记录选中的按钮。</p>
+<h4 id="ToggleButtonBar">ToggleButtonBar</h4>
+<p>某些按钮除了在选中状态上是互斥的以外，在显示上也会有相关，比如选中的按钮会在其他未选中按钮的上面，即<code>index</code>比其他的要高，所以他们应该同属一个父类，所以这个组件就继承ui组件的基类了，其他的逻辑和<code>RadioButtonGroup</code>保持一致即可。</p>
+<h2 id="常用属性">常用属性</h2>
+<ul>
+<li><code>selectIndex</code>:可读写，设置选中的索引，可添加进去的顺序有关.</li>
+<li><code>selectItem</code>:可读写，设置选中的按钮项，建议使用<code>selectIndex</code>属性。</li>
+</ul>
+<h2 id="事件">事件</h2>
+<p>在选中项发生改变的时候应该派发<code>selcetChange</code>事件，通知外部。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="组件思考">组件思考</h2>
+<p>有一些组件并不是独立的，它的改变需要去影响其他组件的显示或者内部的逻辑处理，比如Flex框架中的<code>RadioButtonGroup</code>,<code>ButtonBar</code>, <code>Toggl]]>
+    </summary>
+    
+      <category term="ActionScript3.0" scheme="/categories/ActionScript3-0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[flash组件--Button类族]]></title>
+    <link href="/2014/10/27/flashui-button/"/>
+    <id>/2014/10/27/flashui-button/</id>
+    <published>2014-10-27T10:28:58.000Z</published>
+    <updated>2014-10-27T11:17:29.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="组件思考">组件思考</h2>
+<p><code>Button</code>这个组件在游戏中使用的超级多，一个现实区域，还可能有文字的显示，AS3自带的一个简单Button，SimpeButton，和名字一样很简单，处理三帧的显示，接受鼠标事件，但是可拓展性太小，而且没有获取子视图的API提供，所以重写一个。</p>
+<h3 id="设计">设计</h3>
+<p>同样也是需要三帧显示，对应<code>mouse_out</code>、<code>mouse_ove</code>、<code>mouse_dow</code>，当然你也可以让美术设计给更多，不过一般我们只需要三帧就可以了(这个和手机游戏中使用的三种状态的纹理差不多意思)。因为这三帧是分别对应三种鼠标事件的显示，所以内部需要监听和管理这三个事件，鼠标移上去可能还需要显示提示tip，这个在组件基类的时候已经处理过了，重写调用即可。事件在内部的监听一般会使用弱引用，就是<code>addEventListener</code>方法最后一个参数这是为<code>true</code>，这样在这个对象不在被使用的时候也会清除这个事件的。</p>
+<h3 id="抽象">抽象</h3>
+<p>因为历史原因，我们项目的工作流还是ps-&gt;flashcs-&gt;code，给到开发的美术资源都是fla文件，不过这种效率确实很高，所以按钮做成一个<code>MovieClip</code>用跳帧的方式去工作很方便，抽象一个基类<code>ButtonBase</code>,实现<code>IState</code>接口的唯一方法：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">changeState</span><span class="params">(state:int)</span><span class="type">:void</span></span>;</div></pre></td></tr></table></figure>
+
+<p>这个方法就是在处理特定的事件的时候改变按钮的状态，就是跳帧。<br>接下来在其他的按钮类族（<code>CheckBox</code> <code>RadioButton</code>）中也会去调这个函数，让整个按钮类族都变的很方便。</p>
+<h4 id="Button">Button</h4>
+<p>按照上面的思路写一个还是挺简单，其中要注意父类的<code>callLate</code>函数的调用。</p>
+<h4 id="CheckBox">CheckBox</h4>
+<p>比它的父类多了一种选中的状态，所以就多了三帧，而且还有一个选中属性<code>selected</code>，可读写，设置此值会影响组件的外观</p>
+<h4 id="RadioButton">RadioButton</h4>
+<p>单选的按钮，和<code>CheckBox</code>类似也是6帧，一般不会单独使用，因为不能通过点击自己来切换选中和未选中状态，所以添加到<code>RadioButtonGroup</code>类来使用。</p>
+<p><strong>项目中使用的按钮类用这三种就能全部涵盖进来了</strong></p>
+<h2 id="常用属性">常用属性</h2>
+<ul>
+<li><code>text</code>:设置按钮上的文字。</li>
+<li><code>slected</code>:是否选中状态(<code>CheckBox</code> <code>RadioButton</code>)。</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="组件思考">组件思考</h2>
+<p><code>Button</code>这个组件在游戏中使用的超级多，一个现实区域，还可能有文字的显示，AS3自带的一个简单Button，SimpeButton，和名字一样很简单，处理三帧的显示，接受鼠标事件，但是可拓展性太小，]]>
+    </summary>
+    
+      <category term="ActionScript3.0" scheme="/categories/ActionScript3-0/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[网格]]></title>
