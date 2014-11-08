@@ -1,26 +1,108 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-  <title><![CDATA[行走的力量]]></title>
-  <subtitle><![CDATA[一直走，路总会笑]]></subtitle>
-  <link href="/atom.xml" rel="self"/>
-  <link href="/"/>
-  <updated>2014-11-08T05:44:11.662Z</updated>
-  <id>/</id>
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
   
-  <author>
-    <name><![CDATA[Weber Wang]]></name>
+    <title>Objective-C Runtime | 行走的力量</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
-  </author>
-  
-  <generator uri="http://zespia.tw/hexo/">Hexo</generator>
-  
-  <entry>
-    <title><![CDATA[Objective-C Runtime]]></title>
-    <link href="/2014/11/08/OBJC-Runtime/"/>
-    <id>/2014/11/08/OBJC-Runtime/</id>
-    <published>2014-11-08T05:11:22.000Z</published>
-    <updated>2014-11-08T05:42:39.000Z</updated>
-    <content type="html"><![CDATA[<p><strong>本文来源<a href="http://yulingtianxia.com/blog/2014/11/05/objective-c-runtime/" target="_blank" rel="external">玉令天下的blog</a></strong></p>
+    <meta name="author" content="Weber Wang">
+    
+    <meta name="description" content="本文来源玉令天下的blog
+本文详细整理了 Cocoa 的 Runtime 系统的知识，它使得 Objective-C 如虎添翼，具备了灵活的动态特性，使这门古老的语言焕发生机。主要内容如下：引言
+简介
+与Runtime交互
+Runtime术语
+消息
+动态方法解析
+消息转发
+健壮的实例变量(Non ">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml## RSS address." title="行走的力量" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="行走的力量" title="行走的力量"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="行走的力量">行走的力量</a></h1>
+				<h2 class="blog-motto">一直走，路总会笑</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">文章分类</a></li>
+					
+						<li><a href="/todolist">ToDoList</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+					
+					<form class="search" action="//baidu.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/11/08/OBJC-Runtime/" title="Objective-C Runtime" itemprop="url">Objective-C Runtime</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="" title="Weber Wang">Weber Wang</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-11-08T05:11:22.000Z" itemprop="datePublished">11月 8 2014</time>
+    更新日期:<time datetime="2014-11-08T05:42:39.000Z" itemprop="dateModified">11月 8 2014</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#引言"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">2.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#与Runtime交互"><span class="toc-number">3.</span> <span class="toc-text">与Runtime交互</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Objective-C源代码"><span class="toc-number">3.1.</span> <span class="toc-text">Objective-C源代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NSObject的方法"><span class="toc-number">3.2.</span> <span class="toc-text">NSObject的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Runtime的函数"><span class="toc-number">3.3.</span> <span class="toc-text">Runtime的函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Runtime术语"><span class="toc-number">4.</span> <span class="toc-text">Runtime术语</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SEL"><span class="toc-number">4.1.</span> <span class="toc-text">SEL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#id"><span class="toc-number">4.2.</span> <span class="toc-text">id</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Class"><span class="toc-number">4.3.</span> <span class="toc-text">Class</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Method"><span class="toc-number">4.4.</span> <span class="toc-text">Method</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ivar"><span class="toc-number">4.5.</span> <span class="toc-text">Ivar</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IMP"><span class="toc-number">4.6.</span> <span class="toc-text">IMP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cache"><span class="toc-number">4.7.</span> <span class="toc-text">Cache</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#消息"><span class="toc-number">5.</span> <span class="toc-text">消息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#objc_msgSend函数"><span class="toc-number">5.1.</span> <span class="toc-text">objc_msgSend函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法中的隐藏参数"><span class="toc-number">5.2.</span> <span class="toc-text">方法中的隐藏参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取方法地址"><span class="toc-number">5.3.</span> <span class="toc-text">获取方法地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态方法解析"><span class="toc-number">6.</span> <span class="toc-text">动态方法解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#消息转发"><span class="toc-number">7.</span> <span class="toc-text">消息转发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#重定向"><span class="toc-number">7.1.</span> <span class="toc-text">重定向</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#转发"><span class="toc-number">7.2.</span> <span class="toc-text">转发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#转发和多继承"><span class="toc-number">7.3.</span> <span class="toc-text">转发和多继承</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#替代者对象(Surrogate_Objects)"><span class="toc-number">7.4.</span> <span class="toc-text">替代者对象(Surrogate Objects)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#转发与继承"><span class="toc-number">7.5.</span> <span class="toc-text">转发与继承</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#健壮的实例变量(Non_Fragile_ivars)"><span class="toc-number">8.</span> <span class="toc-text">健壮的实例变量(Non Fragile ivars)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Objective-C_Associated_Objects"><span class="toc-number">9.</span> <span class="toc-text">Objective-C Associated Objects</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">10.</span> <span class="toc-text">总结</span></a></li></ol>
+		</div>
+		
+		<p><strong>本文来源<a href="http://yulingtianxia.com/blog/2014/11/05/objective-c-runtime/" target="_blank" rel="external">玉令天下的blog</a></strong></p>
 <p><img src="http://cn.cocos2d-x.org/uploads/20141107/1415327393565282.jpeg" alt="图片"><br>本文详细整理了 Cocoa 的 Runtime 系统的知识，它使得 Objective-C 如虎添翼，具备了灵活的动态特性，使这门古老的语言焕发生机。主要内容如下：<br>引言</p>
 <p>简介</p>
 <p>与Runtime交互</p>
@@ -225,311 +307,252 @@
 <p>– <a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40008048" target="_blank" rel="external">Objective-C Runtime Programming Guide</a></p>
 <p>– <a href="http://blog.csdn.net/wzzvictory/article/details/8615569" target="_blank" rel="external">Objective-C runtime之运行时的基本特点</a></p>
 <p>– <a href="http://cocoasamurai.blogspot.jp/2010/01/understanding-objective-c-runtime.html" target="_blank" rel="external">Understanding the Objective-C Runtime</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p><strong>本文来源<a href="http://yulingtianxia.com/blog/2014/11/05/objective-c-runtime/" target="_blank" rel="external">玉令天下的blog</a></strong>]]>
-    </summary>
-    
-      <category term="Objective-C" scheme="/categories/Objective-C/"/>
-    
-  </entry>
   
-  <entry>
-    <title><![CDATA[flash组件--List/Grid（1）]]></title>
-    <link href="/2014/10/27/flashui-list-grid/"/>
-    <id>/2014/10/27/flashui-list-grid/</id>
-    <published>2014-10-27T11:44:14.000Z</published>
-    <updated>2014-10-29T14:03:19.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="组件思考">组件思考</h2>
-<p><code>List</code> <code>DataGrid</code>这两个组件在Flex中是相当重量级的组件，写得非常好，但是过于庞大。我们的游戏也由用到类似功能的组件—由数据驱动的组件。有时候数据量可能会比较大，组件的效率成了首要考虑的因素。</p>
-<h3 id="抽象">抽象</h3>
-<p>首先是数据源的问题，因为数据源的修改会直接影响到组件的现实问题，所以对于数据源的修改更新需要被组件所知道，但是AS提供的几个关系数据源的类都没有派发事件的能力，所以需要自己拓展一个数据源类来使用。</p>
-<p>其次是显示子对象的处理，和Flex一样也抽象一个<code>RenderItem</code>基类用作项呈示器，每一项数据都对应创建一个项呈示器的实例，内部负责创建和销毁。</p>
-<p>最后在视图滚动的时候数据源该如果创建子对象也是需要解决的.在视图滚动的时候如果更新显示对象以及滚动范围。</p>
-<h3 id="实现">实现</h3>
-<p><strong>数据源</strong>在被修改的时候需要通知组件做相对应的改变，新建一个类可以在数据源改变的时候派发事件。用一个<code>EventDispatch</code>封装一个<code>Array</code>的操作，内部重新实现<code>Array</code>的几个可以改变数据源的函数，比如<code>push</code>, <code>pop</code>等等，在改变数据源的时候派发事件即可在组件监听到并做出相对应的逻辑处理。</p>
-<p><strong>项呈示器</strong>每一个实例有包含一个数据源的子项数据，具有以下属性</p>
-<ul>
-<li><code>index</code>当前的索引</li>
-<li><code>data</code>数据项<br>并且实现一个接口，该接口有一个函数签名:</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">update</span><span class="params">(index:int, data:Object)</span><span class="type">:void</span></span>;</div></pre></td></tr></table></figure>
+	</div>
+		<footer class="article-footer clearfix">
 
-<p>在组件的数据源需要重新复制到项呈示器的时候调用这个函数更新即可，每个项呈示器都需要在<code>update</code>函数中处理和数据有关的逻辑。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="组件思考">组件思考</h2>
-<p><code>List</code> <code>DataGrid</code>这两个组件在Flex中是相当重量级的组件，写得非常好，但是过于庞大。我们的游戏也由用到类似功能的组件—由数据驱动的组件。有时候数据量可能会比较大，组]]>
-    </summary>
-    
-      <category term="ActionScript3.0" scheme="/categories/ActionScript3-0/"/>
-    
-  </entry>
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Objective-C/">Objective-C</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="/2014/11/08/OBJC-Runtime/" data-title="Objective-C Runtime | 行走的力量" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2014/10/27/flashui-list-grid/"  title="flash组件--List/Grid（1）">
+ <strong>NEXT:</strong><br/> 
+ <span>flash组件--List/Grid（1）
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#引言"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">2.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#与Runtime交互"><span class="toc-number">3.</span> <span class="toc-text">与Runtime交互</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Objective-C源代码"><span class="toc-number">3.1.</span> <span class="toc-text">Objective-C源代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NSObject的方法"><span class="toc-number">3.2.</span> <span class="toc-text">NSObject的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Runtime的函数"><span class="toc-number">3.3.</span> <span class="toc-text">Runtime的函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Runtime术语"><span class="toc-number">4.</span> <span class="toc-text">Runtime术语</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SEL"><span class="toc-number">4.1.</span> <span class="toc-text">SEL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#id"><span class="toc-number">4.2.</span> <span class="toc-text">id</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Class"><span class="toc-number">4.3.</span> <span class="toc-text">Class</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Method"><span class="toc-number">4.4.</span> <span class="toc-text">Method</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ivar"><span class="toc-number">4.5.</span> <span class="toc-text">Ivar</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IMP"><span class="toc-number">4.6.</span> <span class="toc-text">IMP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cache"><span class="toc-number">4.7.</span> <span class="toc-text">Cache</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#消息"><span class="toc-number">5.</span> <span class="toc-text">消息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#objc_msgSend函数"><span class="toc-number">5.1.</span> <span class="toc-text">objc_msgSend函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法中的隐藏参数"><span class="toc-number">5.2.</span> <span class="toc-text">方法中的隐藏参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取方法地址"><span class="toc-number">5.3.</span> <span class="toc-text">获取方法地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态方法解析"><span class="toc-number">6.</span> <span class="toc-text">动态方法解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#消息转发"><span class="toc-number">7.</span> <span class="toc-text">消息转发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#重定向"><span class="toc-number">7.1.</span> <span class="toc-text">重定向</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#转发"><span class="toc-number">7.2.</span> <span class="toc-text">转发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#转发和多继承"><span class="toc-number">7.3.</span> <span class="toc-text">转发和多继承</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#替代者对象(Surrogate_Objects)"><span class="toc-number">7.4.</span> <span class="toc-text">替代者对象(Surrogate Objects)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#转发与继承"><span class="toc-number">7.5.</span> <span class="toc-text">转发与继承</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#健壮的实例变量(Non_Fragile_ivars)"><span class="toc-number">8.</span> <span class="toc-text">健壮的实例变量(Non Fragile ivars)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Objective-C_Associated_Objects"><span class="toc-number">9.</span> <span class="toc-text">Objective-C Associated Objects</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">10.</span> <span class="toc-text">总结</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
   
-  <entry>
-    <title><![CDATA[flash组件--按钮组]]></title>
-    <link href="/2014/10/27/flashui-bar/"/>
-    <id>/2014/10/27/flashui-bar/</id>
-    <published>2014-10-27T11:19:04.000Z</published>
-    <updated>2014-10-27T11:43:15.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="组件思考">组件思考</h2>
-<p>有一些组件并不是独立的，它的改变需要去影响其他组件的显示或者内部的逻辑处理，比如Flex框架中的<code>RadioButtonGroup</code>,<code>ButtonBar</code>, <code>ToggleButtonBar</code>等等，内部视图都是互有联系的，游戏中也会用到类似的功能。用AS3代码写几个用到的。</p>
-<h3 id="抽象">抽象</h3>
-<p>组件内部的子视图之前的相互关系对使用者是透明的，需要什么样的功能内部管理就好，内部监听没一个显示对象的事件，显示对象通过<code>addItem</code>函数添加进去并且监听鼠标事件，可以有一个默认选中项的设定，这取决于开发者。选中项的改变也需要派发相对应的事件。</p>
-<h3 id="实现">实现</h3>
-<h4 id="RadioButtonGroup">RadioButtonGroup</h4>
-<p>这些按钮在选中逻辑上是互斥，所以只是逻辑上处理就可以了，集成<code>EventDispatch</code>基类是最轻便的，在有一个<code>radioButton</code>被选中的时候将上次被选中的按钮设置为未选中状态，同时记录选中的按钮。</p>
-<h4 id="ToggleButtonBar">ToggleButtonBar</h4>
-<p>某些按钮除了在选中状态上是互斥的以外，在显示上也会有相关，比如选中的按钮会在其他未选中按钮的上面，即<code>index</code>比其他的要高，所以他们应该同属一个父类，所以这个组件就继承ui组件的基类了，其他的逻辑和<code>RadioButtonGroup</code>保持一致即可。</p>
-<h2 id="常用属性">常用属性</h2>
-<ul>
-<li><code>selectIndex</code>:可读写，设置选中的索引，可添加进去的顺序有关.</li>
-<li><code>selectItem</code>:可读写，设置选中的按钮项，建议使用<code>selectIndex</code>属性。</li>
-</ul>
-<h2 id="事件">事件</h2>
-<p>在选中项发生改变的时候应该派发<code>selcetChange</code>事件，通知外部。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="组件思考">组件思考</h2>
-<p>有一些组件并不是独立的，它的改变需要去影响其他组件的显示或者内部的逻辑处理，比如Flex框架中的<code>RadioButtonGroup</code>,<code>ButtonBar</code>, <code>Toggl]]>
-    </summary>
-    
-      <category term="ActionScript3.0" scheme="/categories/ActionScript3-0/"/>
-    
-  </entry>
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/ActionScript3-0/" title="ActionScript3.0">ActionScript3.0<sup>4</sup></a></li>
+		
+			<li><a href="/categories/Minko3D/" title="Minko3D">Minko3D<sup>5</sup></a></li>
+		
+			<li><a href="/categories/Objective-C/" title="Objective-C">Objective-C<sup>1</sup></a></li>
+		
+			<li><a href="/categories/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
   
-  <entry>
-    <title><![CDATA[flash组件--Button类族]]></title>
-    <link href="/2014/10/27/flashui-button/"/>
-    <id>/2014/10/27/flashui-button/</id>
-    <published>2014-10-27T10:28:58.000Z</published>
-    <updated>2014-10-27T11:17:29.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="组件思考">组件思考</h2>
-<p><code>Button</code>这个组件在游戏中使用的超级多，一个现实区域，还可能有文字的显示，AS3自带的一个简单Button，SimpeButton，和名字一样很简单，处理三帧的显示，接受鼠标事件，但是可拓展性太小，而且没有获取子视图的API提供，所以重写一个。</p>
-<h3 id="设计">设计</h3>
-<p>同样也是需要三帧显示，对应<code>mouse_out</code>、<code>mouse_ove</code>、<code>mouse_dow</code>，当然你也可以让美术设计给更多，不过一般我们只需要三帧就可以了(这个和手机游戏中使用的三种状态的纹理差不多意思)。因为这三帧是分别对应三种鼠标事件的显示，所以内部需要监听和管理这三个事件，鼠标移上去可能还需要显示提示tip，这个在组件基类的时候已经处理过了，重写调用即可。事件在内部的监听一般会使用弱引用，就是<code>addEventListener</code>方法最后一个参数这是为<code>true</code>，这样在这个对象不在被使用的时候也会清除这个事件的。</p>
-<h3 id="抽象">抽象</h3>
-<p>因为历史原因，我们项目的工作流还是ps-&gt;flashcs-&gt;code，给到开发的美术资源都是fla文件，不过这种效率确实很高，所以按钮做成一个<code>MovieClip</code>用跳帧的方式去工作很方便，抽象一个基类<code>ButtonBase</code>,实现<code>IState</code>接口的唯一方法：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">changeState</span><span class="params">(state:int)</span><span class="type">:void</span></span>;</div></pre></td></tr></table></figure>
-
-<p>这个方法就是在处理特定的事件的时候改变按钮的状态，就是跳帧。<br>接下来在其他的按钮类族（<code>CheckBox</code> <code>RadioButton</code>）中也会去调这个函数，让整个按钮类族都变的很方便。</p>
-<h4 id="Button">Button</h4>
-<p>按照上面的思路写一个还是挺简单，其中要注意父类的<code>callLate</code>函数的调用。</p>
-<h4 id="CheckBox">CheckBox</h4>
-<p>比它的父类多了一种选中的状态，所以就多了三帧，而且还有一个选中属性<code>selected</code>，可读写，设置此值会影响组件的外观</p>
-<h4 id="RadioButton">RadioButton</h4>
-<p>单选的按钮，和<code>CheckBox</code>类似也是6帧，一般不会单独使用，因为不能通过点击自己来切换选中和未选中状态，所以添加到<code>RadioButtonGroup</code>类来使用。</p>
-<p><strong>项目中使用的按钮类用这三种就能全部涵盖进来了</strong></p>
-<h2 id="常用属性">常用属性</h2>
-<ul>
-<li><code>text</code>:设置按钮上的文字。</li>
-<li><code>slected</code>:是否选中状态(<code>CheckBox</code> <code>RadioButton</code>)。</li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="组件思考">组件思考</h2>
-<p><code>Button</code>这个组件在游戏中使用的超级多，一个现实区域，还可能有文字的显示，AS3自带的一个简单Button，SimpeButton，和名字一样很简单，处理三帧的显示，接受鼠标事件，但是可拓展性太小，]]>
-    </summary>
-    
-      <category term="ActionScript3.0" scheme="/categories/ActionScript3-0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[网格]]></title>
-    <link href="/2014/10/26/Minko3d-mesh/"/>
-    <id>/2014/10/26/Minko3d-mesh/</id>
-    <published>2014-10-26T14:51:18.000Z</published>
-    <updated>2014-10-26T14:51:44.000Z</updated>
-    <content type="html"><![CDATA[<p>源码中运用到mesh—网格的代码：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> cube : Mesh = <span class="keyword">new</span> Mesh(</div><div class="line">CubeGeometry.cubeGeometry,</div><div class="line"><span class="keyword">new</span> BasicMaterial({</div><div class="line">diffuseMap : TextureLoader.loadClass(EMBED_TEXTURE),</div><div class="line">diffuseColor: <span class="number">0xffffffff</span>,</div><div class="line">diffuseTransform: <span class="keyword">new</span> HLSAMatrix4x4(),</div><div class="line">blending: Blending.ALPHA</div><div class="line">})；</div></pre></td></tr></table></figure>
-
-<p><code>Mesh</code>类的构造函数需要三个参数，第一个是网格的几何形状，如立方体，Minko中内置了好几种常用的形状，Gemetry保存了3D对象的所有顶点坐标,BasicMaterial是一个比较基本的材质类，使各个面都具有相同的纹理渲染，以后对每个文件再做深入的研究。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>源码中运用到mesh—网格的代码：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div]]>
-    </summary>
-    
-      <category term="Minko3D" scheme="/categories/Minko3D/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[动画类]]></title>
-    <link href="/2014/10/26/Minko3d-action/"/>
-    <id>/2014/10/26/Minko3d-action/</id>
-    <published>2014-10-26T14:46:16.000Z</published>
-    <updated>2014-10-26T14:50:03.000Z</updated>
-    <content type="html"><![CDATA[<p>minko对显示对象的控制均是由控制器所控制的，动画也不例外—AnimationController类是控制对象动画的类。AnimationController构造函数签名</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">function</span> AnimationController(timelines      : Vector.&lt;ITimeline&gt;,            <span class="keyword">loop</span>          : <span class="built_in">Boolean</span>     = <span class="literal">true</span>)</div></pre></td></tr></table></figure>
-
-<p>实现ITimeline接口的vector，是否循环loop。和ITimeline相关的类在package aerys.minko.type.animation.timeline包内。来看看例子中两个类 </p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> transforms : Vector.&lt;Matrix4x4&gt;     = <span class="keyword">new</span> &lt;Matrix4x4&gt;[</div><div class="line">                    <span class="keyword">new</span> Matrix4x4(),</div><div class="line">                    <span class="keyword">new</span> Matrix4x4().appendScale(<span class="number">0.5</span>, <span class="number">0.5</span>, <span class="number">0.5</span>),</div><div class="line">                    <span class="keyword">new</span> Matrix4x4()</div><div class="line">               ];</div><div class="line">               <span class="keyword">var</span> alphas : Vector.&lt;<span class="built_in">Number</span>&gt; = <span class="keyword">new</span> &lt;<span class="built_in">Number</span>&gt;[<span class="number">1.</span>, <span class="number">.25</span>, <span class="number">1</span>];</div><div class="line">               <span class="keyword">var</span> animationCtrl : AnimationController = <span class="keyword">new</span> AnimationController(</div><div class="line">                    <span class="keyword">new</span> &lt;ITimeline&gt;[</div><div class="line">                         <span class="keyword">new</span> MatrixRegularTimeline(<span class="string">'transform'</span>, <span class="number">1000</span>, transforms, <span class="literal">true</span>),<span class="keyword">new</span> ScalarRegularTimeline(<span class="string">'material.diffuseTransform.alpha'</span>, <span class="number">1000</span>, alphas)</div><div class="line">                    ]</div><div class="line">               )</div></pre></td></tr></table></figure>
-
-<p><code>MatrixRegularTimeline</code>：矩阵规律变化类，第一个参数是要实现动画对象的属性，先清楚对象类型是否具有此属性，否则会报错这个你自己负责。第二个参数是持续多长时间，单位是毫秒；第三个是Matrix4x4的Vector对象，包含你要改变对象的Matrix4x4属性，是依次执行的，所以上面就是从原来的大小缩小一倍再还原的过程；第四个参数是是否修改缩放，在这里  <code>new Matrix4x4().appendScale(0.5, 0.5, 0.5)</code>就是修改了缩放，必须设置成true了，要不然干吗用这个么个矩阵啊。<br>ScalarRegularTimeline：<br>修改对象属性数值的列，第一个参数是属性名，这个属性必须是number或者int，uint等数值类型的，第二个是持续时间；第三个是修改数字的Vector对象，也是依次执行的。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">var</span> cube <span class="value">: Mesh = new <span class="function">Mesh</span>(</span></div><div class="line">                    CubeGeometry.cubeGeometry,</div><div class="line">                    new <span class="function">BasicMaterial</span>({</div><div class="line">                         diffuseMap                : TextureLoader.<span class="function">loadClass</span>(EMBED_TEXTURE),</div><div class="line">                         diffuseColor          : <span class="number">0</span>xffffffff,</div><div class="line">                         diffuseTransform     : new <span class="function">HLSAMatrix4x4</span>(),</div><div class="line">                         blending               : Blending.ALPHA</div><div class="line">                    })</div><div class="line">               );</div></pre></td></tr></table></figure>
-
-<p>在上面的ScalarRegularTimeline中使用属性material.diffuseTransform.alpha，cube 是一个网格，minko内置了好几种网格形状，这里使用立方体形状，材质是BasicMaterial对应上面的material属性，BasicMaterial对象具有diffuseTransform 属性，上面的例子中diffuseTransform对象是HLSAMatrix4x4类型具有alpha属性，和ScalarRegularTimeline类中第一个构造函数是对应的，所以你在写这些动画的时候要清楚你的对象是否真得具有此属性。<br>实现ITimeline接口的类都大同小异，基本差不多，ScalarTimeline类是一个用时刻表控制的，第二个参数就是时刻表，就是在什么时候做什么事，各个时刻之间是平滑变化的，如果你把两个时刻设置成了一样那么第一个就看不到了。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>minko对显示对象的控制均是由控制器所控制的，动画也不例外—AnimationController类是控制对象动画的类。AnimationController构造函数签名</p>
-<figure class="highlight"><table><tr><td class]]>
-    </summary>
-    
-      <category term="Minko3D" scheme="/categories/Minko3D/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[接受鼠标事件]]></title>
-    <link href="/2014/10/26/Minko3d-mouse/"/>
-    <id>/2014/10/26/Minko3d-mouse/</id>
-    <published>2014-10-26T14:42:45.000Z</published>
-    <updated>2014-10-26T14:45:40.000Z</updated>
-    <content type="html"><![CDATA[<p><code>PickingController</code>，鼠标信号采集控制器，可以响应鼠标事件，必需绑定到一个实现IEventDispatcher接口对象上，再minko中只有viewprot了，通过viewprot试图接口响应各种鼠标事件，可以将这个控制器绑定到某一显示对象上或者一个组group等，<br>响应回调函数的接口签名</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span><span class="params">(ctrl : PickingController, mesh : Mesh, mouseX : Number, mouseY : Number)</span> <span class="type">: void</span></span></div></pre></td></tr></table></figure>
-
-<p>第一个是控制器本身，第二个是鼠标下的网格，第三第四是鼠标在bindDefaultInputs绑定的对象的局部坐标。<br>官网对这个类的<a href="http://doc.minko.io/wiki/Add_Pixel_Perfect_Mouse_Interactivity/" target="_blank" rel="external">讲解</a>。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p><code>PickingController</code>，鼠标信号采集控制器，可以响应鼠标事件，必需绑定到一个实现IEventDispatcher接口对象上，再minko中只有viewprot了，通过viewprot试图接口响应各种鼠标事件，可以将这个控制器绑定到某一显]]>
-    </summary>
-    
-      <category term="Minko3D" scheme="/categories/Minko3D/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[light（1）]]></title>
-    <link href="/2014/10/26/Minko3d-light/"/>
-    <id>/2014/10/26/Minko3d-light/</id>
-    <published>2014-10-26T14:39:26.000Z</published>
-    <updated>2014-10-26T14:41:35.000Z</updated>
-    <content type="html"><![CDATA[<p><code>SpotLight</code>，聚光灯，顾名思义，像聚光灯一样，一个点出发，光线是不平行的，有一个外圈和内圈，类似用过的可以调节聚光的手电:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var spotLight: <span class="variable">SpotLight=</span> new SpotLight();</div><div class="line">spotLight.<span class="variable">diffuse=</span> .<span class="number">2</span>;</div><div class="line">spotLight.<span class="variable">shadowCastingType=</span> ShadowMappingType.MATRIX;</div><div class="line">spotLight.<span class="variable">shadowMapSize=</span> <span class="number">1024</span>;</div><div class="line">spotLight.<span class="variable">outerRadius=</span> Math.PI / <span class="number">2</span>;</div><div class="line">spotLight.<span class="variable">innerRadius=</span> <span class="number">0</span>;</div><div class="line">spotLight.<span class="variable">shadowMapQuality=</span> ShadowMappingQuality.LOW;</div></pre></td></tr></table></figure>
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">10</span></li></ul>
+  </div>
 
 
-<p>diffuse光线的强度，越大越亮；<br>shadowCastingType,投影类型，影响影子的形状；<br>shadowMapSize，投影纹理的长宽，是一个正方形的纹理；outerRadius外圈半径；<br>innerRadius内圈半径；<br>shadowMapQuality投影质量，为了节省性能，一般用low就行</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p><code>SpotLight</code>，聚光灯，顾名思义，像聚光灯一样，一个点出发，光线是不平行的，有一个外圈和内圈，类似用过的可以调节聚光的手电:</p>
-<figure class="highlight"><table><tr><td class="gutter"]]>
-    </summary>
-    
-      <category term="Minko3D" scheme="/categories/Minko3D/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Minko3d引擎Demo学习]]></title>
-    <link href="/2014/10/26/Minko3d-entry/"/>
-    <id>/2014/10/26/Minko3d-entry/</id>
-    <published>2014-10-26T14:30:24.000Z</published>
-    <updated>2014-10-26T14:38:41.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="一个flash3d框架">一个flash3d框架</h2>
-<p>比较早得时候学习的一个框架，当时和其他比较出名的3D框架比如away3d对比了下，觉得这个上手难度低而且封装的比较好，就开始学习一段时间，这个团队现在做了c++版本的引擎，也是跨平台的。之前的笔记现在搬过来。</p>
-<h2 id="Demo入口">Demo入口</h2>
-<p>MinkoExampleApplication文件是所有实例主文件的基类，一个minko程序的大致框架流程基本就是这样。<br>所有的现实对象继承AbstractSceneNode并实现了ISceneNode接口，如果你想自定义一个minko的现实对象也要这样做。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">initializeScene</span><span class="params">()</span> <span class="type">: void</span></span></div><div class="line">{</div><div class="line">     _camera = <span class="keyword">new</span> Camera();</div><div class="line">     _cameraController = <span class="keyword">new</span> ArcBallController();</div><div class="line">     _cameraController.bindDefaultControls(stage);</div><div class="line">     _cameraController.minDistance = <span class="number">1</span>;</div><div class="line">     _cameraController.yaw = Math.PI * -<span class="number">.5</span>;</div><div class="line">     _cameraController.pitch = Math.PI / <span class="number">2</span>;</div><div class="line">     _cameraController.distance = <span class="number">5</span>;</div><div class="line">     camera.addController(_cameraController);              </div><div class="line">     _scene.addChild(camera);</div><div class="line">}</div></pre></td></tr></table></figure>
+  <div class="rsspart">
+	<a href="/atom.xml## RSS address." target="_blank" title="rss">RSS 订阅</a>
+</div>
 
-<p>Camera就是一个显示对象，一般来说我们不需要修改这个类，除非你有一些奇葩的想法；<br>并且在这里添加了一个控制器—响应鼠标操作的控制器，这个类会经常用到，会响应鼠标点击，滑轮滚动以及鼠标按下拖动事件，下面是对一些成员的说明：<br>     bindDefaultControls方法，参数是IEventDispatcher类型，所以是flash的实现了改接口的原生对象；<br>     minDistance是摄像机到显示对象的最小距离，对应一个最大距离；<br>     yaw 偏离角度，影响，x和z；<br>     pitch  一个仰角，弧度制，大于0为俯视，只影响与Y的角度；<br>     distance 与现实对象间的距离，大于0时对象在摄像机前面；<br>camera实现了ISceneNode接口，所以可以添加控制器，现实对象的响应都是在控制器中实现的，并可以添加多个控制器。<br>Scene类，minko中可以渲染其他显示对象的类，因为实现了RenderingController控制器，RenderingController类是一个渲染实现类，最终使用stage3d对象的是DrawCall类，想自定义一个渲染对象继承Scene类即可。<br>还有一个重要的类Viewport，这是连接原生显示对象和minko的类，看名字你就懂的，这个类封装了调用了Context3DResource—一个对3D对象管理的类，但是我们无法访问，有需要请用自己的双手解决。<br>MinkoExampleApplication文件还是比较简单，看下就会用了。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="一个flash3d框架">一个flash3d框架</h2>
-<p>比较早得时候学习的一个框架，当时和其他比较出名的3D框架比如away3d对比了下，觉得这个上手难度低而且封装的比较好，就开始学习一段时间，这个团队现在做了c++版本的引擎，也是跨平台的。之前的笔记现]]>
-    </summary>
-    
-      <category term="Minko3D" scheme="/categories/Minko3D/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[自定义AS3UI组件--前言]]></title>
-    <link href="/2014/10/25/about-flash-UI/"/>
-    <id>/2014/10/25/about-flash-UI/</id>
-    <published>2014-10-24T16:55:37.000Z</published>
-    <updated>2014-10-25T09:09:48.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="背景">背景</h2>
-<p>公司用了好多年的公共库变的很臃肿，效率低，代码重复，最后这个重构重写的任务安排到了我，用blog记录下对AS组件的思考.</p>
-<h2 id="基类需要解决的问题">基类需要解决的问题</h2>
-<p>对组件基类的思考:<br>基础组件——一个容器，AS3提供的最基本的容器是<strong>Sprite</strong>，还有一个虚基类<strong>DisplayObjectContainer</strong>，但是这是一个虚基类且不能接受鼠标事件，所以为了方便（我觉得程序员的东西就应该方便自己）直接继承<strong>Sprite</strong>，但是<strong>Sprite</strong>有一个比较尴尬的问题就是不能设置大小尺寸，这里用到<code>scrollRect</code>属性来控制尺寸，<code>scrollRect</code>属性可以裁剪视图并对视图做滚动处理，更多信息谷歌。</p>
-<h3 id="如何提高渲染效率">如何提高渲染效率</h3>
-<p>对于组件属性修改的响应，比较直接的想法就是，在修改的时候就做出响应并做响应的处理，但是这样做的话效率比较低，可能在同一帧中对同一属性或者方法中调用多次那么这段逻辑就要处理多次了。<br>这里使用AS中较高级的用法<code>Render</code>事件，每一个显示对象都会监听到这个事件，在显示对象渲染之前这是处理逻辑的最后一次机会。每次需要<code>DisplayObject</code>触发<code>render</code>事时，都要调用一次<code>stage.invalidate();</code><br>所以在渲染之前统一处理显示逻辑可以减少很多重复的代码，定义一个<code>callLater</code>函数，所有需要延迟处理的逻辑调用这个函数，签名：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">callLater</span><span class="params">(call:Function, <span class="rest_arg">...args</span>)</span><span class="type">:void</span></span>;</div></pre></td></tr></table></figure>
+  <iframe width="100%" height="350" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=350&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=0&isWeibo=1&isFans=0&uid=2426173084&verifier=5bb4676f&dpc=1"></iframe>
 
-<p>但是也有可能同一个函数<code>call</code>被调用多次，所以做一个判断只需要对同一个函数执行一次，传递的参数为最后修改的，不过这个参数一般是全局定义的，这样执行的效率会高很多。</p>
-<h3 id="设置组件的尺寸">设置组件的尺寸</h3>
-<p>组件<code>width</code>和<code>height</code>属性要被重写<br><code>get</code>方法：</p>
-<blockquote>
-<p>如果没有设置过尺寸就返回所有可视的子视图占得大小，就是一个<code>for</code>循环，用所有子视图的坐标加宽高。</p>
-</blockquote>
-<p><code>set</code>方法</p>
-<blockquote>
-<p>设置尺寸的时候重新设置<code>scrollRect</code>属性，这个属性可以裁剪视图显示，然后延迟布局组件内部布局。</p>
-</blockquote>
-<h3 id="组件内部事件管理">组件内部事件管理</h3>
-<p><strong>组件内部也会有事件管理并抛出，所以内部事件也需要管理不然就会有内存泄露了，但是这些管理不应该由使用者去关心，在内部管理对使用者是透明的。</strong></p>
-<ol>
-<li>显示对象在添加到父容器的时候才启用内部事件的监听，一种是自己监听<code>addToStage</code>事件，但是这个事件也需要被管理， 在逻辑上会有一个死结，所以重新定义一个<code>addToParent</code>函数，内部调用<code>addEvents</code>，这个函数集中监听了内部事件，在被添加到父容器的时候就会监听内部的必要事件。</li>
-<li>内部事件何时被移除。以往删除显示对象需要先判断显示对象的<code>parent</code>属性是否为<code>null</code>再删除这个显示对象，自定义组件新增函数:</li>
-</ol>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">removeFromParent</span><span class="params">(clear:true)</span><span class="type">:void</span></span></div></pre></td></tr></table></figure>
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://yangjian.me" target="_blank" title="YangJian">Alimon's Blog</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+    </ul>
+</div>
 
-<p>内部做一个判断可以减少很多重复的代码，并且可以通过<code>clear</code>参数判断是否移除内部事件<code>dispose</code>函数。</p>
-<h2 id="常用属性">常用属性</h2>
-<ul>
-<li><code>enable</code>:是否禁用组件，禁用鼠标事件并且改变组件外观。</li>
-<li><code>tip</code>:鼠标提示，提示跟随鼠标在组件内部移动，涉及内部事件。</li>
-<li><code>heigth/width</code>:重写宽高，不要调用<code>super.width/height=value</code>，否则组件在设置宽高的时候不见。</li>
-<li><code>displayWidth/Height</code>:组件的显示尺寸，就是看到的大小，宽高乘以缩放值就是显示大小。</li>
-<li><code>skin</code>:组件的皮肤。</li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="背景">背景</h2>
-<p>公司用了好多年的公共库变的很臃肿，效率低，代码重复，最后这个重构重写的任务安排到了我，用blog记录下对AS组件的思考.</p>
-<h2 id="基类需要解决的问题">基类需要解决的问题</h2>
-<p>对组件基类的思考:<br>基础]]>
-    </summary>
-    
-      <category term="ActionScript3.0" scheme="/categories/ActionScript3-0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[搭建Hexo blog总结]]></title>
-    <link href="/2014/10/24/finish-blog/"/>
-    <id>/2014/10/24/finish-blog/</id>
-    <published>2014-10-24T15:22:55.000Z</published>
-    <updated>2014-10-25T06:47:39.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="搭建环境">搭建环境</h2>
-<p>安装环境是<strong><em>OS X Yosemite</em></strong></p>
-<h2 id="安装hexo出错">安装hexo出错</h2>
-<p><code>npm install hexo -g</code>命令在Mac下需要管理员权限所以就是<code>sudo npm install hexo -g</code></p>
-<h2 id="使用pacman主题">使用pacman主题</h2>
-<p>这个主题还是挺好看的，虽然不如<a href="https://github.com/hexojs/hexo-theme-light" target="_blank" rel="external">light</a>主题的简洁，但是那个转动的头像挺有意思的，哈哈。</p>
-<h3 id="使用categories功能">使用categories功能</h3>
-<p>因为是第一次搭建个人博客，所以用了主题之后不知道这个文章是怎么到分类里面去得，按照配置文件的说明是新建<code>categories</code>文件夹到<code>../source</code>.但是在<code>pacman</code>这个文件夹下折腾了半天，崩溃，原来是在博客的根目录下得<code>source</code>文件下新建，然后新建<code>index.md</code>文件就可以了。</p>
-<h2 id="添加新浪微博widget(微博秀)">添加新浪微博widget(微博秀)</h2>
-<ol>
-<li>去<a href="http://app.weibo.com/tool/weiboshow" target="_blank" rel="external">新浪微博开放平台</a>设置和生成微博秀代码。</li>
-<li>在<code>themes/pacman/layout/_widget</code>中新建名为<code>weibo.ejs</code>的文件，将刚才的代码直接保存到这里。</li>
-<li>在<code>themes/pacman/_config.yml</code>中，添加如下：</li>
-</ol>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">widgets:</div><div class="line"><span class="bullet">- </span>weibo</div></pre></td></tr></table></figure>
 
-<p>刷新就可以看到了.</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="搭建环境">搭建环境</h2>
-<p>安装环境是<strong><em>OS X Yosemite</em></strong></p>
-<h2 id="安装hexo出错">安装hexo出错</h2>
-<p><code>npm install hexo -g</co]]>
-    </summary>
-    
-      <category term="hexo" scheme="/categories/hexo/"/>
-    
-  </entry>
-  
-</feed>
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/2426173084## e.g. 436062867 for http://weibo.com/436062867" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/weberwang## e.g. A-limon for https://github.com/A-limon" target="_blank" title="github"></a>
+		
+		
+		<a href="https://www.facebook.com/Minko.Wang.9## e.g. yangjian for https://favebook.com/yangjian" target="_blank" title="facebook"></a>
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2014 
+		
+		<a href="" target="_blank" title="Weber Wang">Weber Wang</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"null"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+  </body>
+</html>
