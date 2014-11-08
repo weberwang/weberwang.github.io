@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>/about/index.html</loc>
+    <lastmod>2014-11-08T06:33:11.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>/2014/11/08/OBJC-Runtime/</loc>
     <lastmod>2014-11-08T05:42:39.000Z</lastmod>
   </url>
@@ -19,11 +24,6 @@
   <url>
     <loc>/2014/10/27/flashui-button/</loc>
     <lastmod>2014-10-27T11:17:29.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>/about/index.html</loc>
-    <lastmod>2014-10-26T15:04:58.000Z</lastmod>
   </url>
   
   <url>
