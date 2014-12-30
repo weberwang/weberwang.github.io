@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>/2014/12/30/CocoaPods-Update/</loc>
+    <lastmod>2014-12-30T14:49:39.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>/2014/11/13/BeginSceneKit/</loc>
     <lastmod>2014-11-13T11:59:00.000Z</lastmod>
   </url>

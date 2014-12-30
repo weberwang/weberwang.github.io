@@ -4,7 +4,7 @@
   <subtitle><![CDATA[一直走，路总会笑]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="/"/>
-  <updated>2014-11-13T12:00:02.372Z</updated>
+  <updated>2014-12-30T14:52:36.030Z</updated>
   <id>/</id>
   
   <author>
@@ -13,6 +13,22 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[CocoaPods pod install/update更新慢的问题]]></title>
+    <link href="/2014/12/30/CocoaPods-Update/"/>
+    <id>/2014/12/30/CocoaPods-Update/</id>
+    <published>2014-12-30T14:44:02.000Z</published>
+    <updated>2014-12-30T14:49:39.000Z</updated>
+    <content type="html"><![CDATA[<p><em>别的地方看到的</em><br>最近使用CocoaPods来添加第三方类库，无论是执行<code>pod install</code>还是<code>pod update</code>都卡在了<code>Analyzing dependencies</code>不动了，令人甚是DT。<br>查了好多的资料，原因在于当执行以上两个命令的时候会升级CocoaPods的spec仓库，加一个参数可以省略这一步，然后速度就会提升不少。加参数的命令如下：<br><code>pod install --verbose --no-repo-update</code><br><code>pod update --verbose --no-repo-update</code></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><em>别的地方看到的</em><br>最近使用CocoaPods来添加第三方类库，无论是执行<code>pod install</code>还是<code>pod update</code>都卡在了<code>Analyzing dependencies</code>不动]]>
+    </summary>
+    
+      <category term="CocoaPods" scheme="/categories/CocoaPods/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Scene Kit上手指南]]></title>
