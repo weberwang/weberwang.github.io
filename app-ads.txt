@@ -38,3 +38,4 @@ telaria.com, rwd19-1673022, RESELLER, 1a4e959a1b50034a
 tremorhub.com, rwd19-1673022, RESELLER, 1a4e959a1b50034a
 google.com, pub-3710497005998641, DIRECT, f08c47fec0942fa0
 google.com, pub-4145484984264649, DIRECT, f08c47fec0942fa0
+google.com, pub-3940256099942544, DIRECT, f08c47fec0942fa0
