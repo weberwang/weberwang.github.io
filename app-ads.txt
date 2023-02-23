@@ -86,3 +86,4 @@ opera.com, pub6920333082432, RESELLER, 55a0c5fd61378de3
 keenkale.com, 94044, RESELLER, 6c1c00b269ccdfa4
 lemmatechnologies.com, 772, RESELLER, 7829010c5bebd1fb #LEMMA
 betweendigital.com, 44249, RESE
+google.com, pub-7199960045983129, RESELLER, f08c47fec0942fa0
