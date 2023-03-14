@@ -399,3 +399,5 @@ sovrn.com, 273644, RESELLER
 conversantmedia.com, 100246, RESELLER
 smartyads.com, 100034, RESELLER
 admanmedia.com, 1009, RESELLER
+google.com, pub-3710497005998641, DIRECT, f08c47fec0942fa0 
+google.com, pub-4145484984264649, DIRECT, f08c47fec0942fa0 
