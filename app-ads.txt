@@ -1098,3 +1098,4 @@ pubmatic.com,157097,RESELLER,5d62403b186f2ace
 pubmatic.com,156439,RESELLER,5d62403b186f2ace
 pubmatic.com,156344,RESELLER,5d62403b186f2ace
 indexexchange.com,184738,RESELLER
+google.com, pub-3710497005998641, DIRECT, f08c47fec0942fa0
